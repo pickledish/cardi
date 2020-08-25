@@ -1,0 +1,93 @@
+<script>
+	import dayjs from 'dayjs'
+  import Cookie from 'js-cookie'
+
+  import Checkbox from './Checkbox.svelte'
+  import SidebarItem from './SidebarItem.svelte'
+  import Icon from './Icon.svelte'
+
+  import { documentClient } from '../dynamodb/client.js'
+  import { getBoards } from '../dynamodb/board.js'
+  import { currArchived, currAscending, currAfterMs, currBoard, boardList } from '../store.js'
+
+  import { onMount } from 'svelte';
+
+  import { toggleStore } from '../util.js';
+
+  // When we load the sidebar, async get all boards, then update the tag store
+  onMount(async () => {
+    let accessKey = Cookie.get('awsAccessKey');
+    let secretKey = Cookie.get('awsSecretKey');
+    let client = documentClient(accessKey, secretKey);
+    $boardList = await getBoards(client);
+  });
+
+  // Support filtering so people don't have to look at them all at once
+  let prefix = "";
+	$: shownBoards = $boardList.filter(b => b.name.startsWith(prefix));
+
+</script>
+
+<div class="p-2 text-xs text-light my-1 tracking-widest">
+	<p>QUICK VIEWS</p>
+</div>
+
+<SidebarItem
+  icon="home"
+  text="Overview"
+  action={() => window.location = "/#/app" && window.location.reload(false)}
+/>
+
+<SidebarItem
+  icon="sad"
+  text="Untagged"
+  action={() => $currBoard = "none"}
+/>
+
+<SidebarItem
+  icon="calendar"
+  text="This Month"
+  action={() => $currAfterMs = dayjs().startOf('month').unix() * 1000}
+/>
+
+<SidebarItem
+  icon="history"
+  text="From Today"
+  action={() => $currAfterMs = dayjs().startOf('day').unix() * 1000}
+/>
+
+<SidebarItem
+  icon="archive"
+  text="Archived"
+  action={() => toggleStore(currArchived)}
+>
+  <Checkbox bind:checked={$currArchived} on:click/>
+</SidebarItem>
+
+<SidebarItem
+  icon="sort"
+  text="Ascending"
+  action={() => toggleStore(currAscending)}
+>
+  <Checkbox bind:checked={$currAscending} on:click/>
+</SidebarItem>
+
+<div class="p-2 text-xs text-light my-1 tracking-widest">
+	<p>ALL BOARDS</p>
+</div>
+
+<div class="flex items-center p-2 ml-4 text-md rounded cursor-pointer bg-desk hover:bg-desk-dark">
+	<Icon kind="search"/>
+	<input class="px-2 w-32 rounded outline-none" style="background-color: inherit;" bind:value={prefix}>
+</div>
+
+{#each shownBoards as board}
+<SidebarItem
+  icon="box"
+  text="{board.name}"
+  bgclass={$currBoard == board.created ? "bg-desk-dark" : ""}
+  action={() => $currBoard = board.created}
+>
+  <span>{$currArchived ? board.archived : board.current}</span>
+</SidebarItem>
+{/each}

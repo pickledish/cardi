@@ -1,0 +1,31 @@
+{
+  "name": "svelte-app",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "sirv public"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.2.0",
+    "@rollup/plugin-commonjs": "^12.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
+    "postcss": "^7.0.30",
+    "postcss-load-config": "^2.1.0",
+    "rollup": "^2.3.4",
+    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.0.0",
+    "svelte-preprocess": "^3.7.4",
+    "tailwindcss": "^1.4.6"
+  },
+  "dependencies": {
+    "sirv-cli": "^0.4.4",
+    "dayjs": "^1.8.32",
+    "js-cookie": "^2.2.1",
+    "masonry-layout": "^4.2.2",
+    "svelte-select": "^3.10.1",
+    "svelte-spa-router": "^1.3.0"
+  }
+}
