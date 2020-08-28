@@ -28,7 +28,7 @@
     class="mr-4 outline-none text-sm bg-peach-dark placeholder-gray-200"
     type="search"
     id="searchbar"
-    placeholder="Search snippets"
+    placeholder="Search notes"
     on:keydown={handleKeyDown}
     >
   <button on:click={handleSearch}>

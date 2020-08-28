@@ -1,4 +1,7 @@
 module.exports = {
+  future: {
+    removeDeprecatedGapUtilities: true,
+  },
   theme: {
     fontFamily: {
       'display': ['Courier', 'sans-serif'],

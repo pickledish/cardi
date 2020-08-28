@@ -35,7 +35,7 @@
 <SidebarItem
   icon="home"
   text="Overview"
-  action={() => window.location = "/#/app" && window.location.reload(false)}
+  action={() => window.location = "/"}
 />
 
 <SidebarItem

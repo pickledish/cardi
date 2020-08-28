@@ -15,8 +15,8 @@
     console.log(`Checking credentials and ensuring tables exist...`)
 
     try {
-      let lowLevelClient = lowLevelClient(accessKey, secretKey);
-      let response = await ensureTables(lowLevelClient);
+      let client = lowLevelClient(accessKey, secretKey);
+      let response = await ensureTables(client);
       Cookie.set("awsAccessKey", accessKey);
       Cookie.set("awsSecretKey", secretKey);
       window.location.hash = "#/app";

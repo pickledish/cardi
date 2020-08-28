@@ -7,7 +7,6 @@ html, body {
 body {
 	color: #4a4a4a;
 	margin: 0;
-	padding: 8px;
 	box-sizing: border-box;
 	font-weight: 400;
 	font-size: 1rem;
@@ -30,7 +29,7 @@ label {
 	display: block;
 }
 
-input, button, select, textarea {
+/*input, button, select, textarea {
 	font-family: inherit;
 	font-size: inherit;
 	padding: 0.4em;
@@ -38,7 +37,7 @@ input, button, select, textarea {
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 2px;
-}
+}*/
 
 input:disabled {
 	color: #ccc;

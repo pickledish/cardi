@@ -4,7 +4,6 @@
 	import Overview from './views/Overview.svelte'
 	import MessageView from './views/MessageView.svelte'
 	import LogIn from './views/LogIn.svelte'
-  import About from './views/About.svelte'
 
 	const routes = {
       //'/': About,
