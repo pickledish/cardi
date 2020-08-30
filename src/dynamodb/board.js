@@ -16,3 +16,48 @@ export async function getBoards(client) {
     return err;
   }
 }
+
+export async function incrementBoard(client, boardId, status) {
+  let params = {
+    'TableName': 'cardi-boards',
+    'Key': {
+      'created': boardId,
+    },
+    'AttributeUpdates': {
+      [status]: {
+        'Action': 'ADD',
+        'Value': 1,
+      }
+    },
+  }
+  try {
+    let data = await client.update(params).promise();
+    return data['Item'];
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+export async function decrementBoard(client, boardId, status) {
+  console.log("Decrementing board...")
+  let params = {
+    'TableName': 'cardi-boards',
+    'Key': {
+      'created': boardId,
+    },
+    'AttributeUpdates': {
+      [status]: {
+        'Action': 'ADD',
+        'Value': -1,
+      }
+    },
+  }
+  try {
+    let data = await client.update(params).promise();
+    return data['Item'];
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}

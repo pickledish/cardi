@@ -58,7 +58,7 @@
         </button>
       </div>
       <div class="flex items-center justify-center flex-col">
-        <div class="text-xs">AWS access keys? Read about <a href="https://github.com/pickledish/cardi/wiki/About">what makes Cardi different</a></div>
+        <div class="text-xs">AWS access keys? Read about <a href="https://github.com/pickledish/cardi/wiki/About">how Cardi works</a></div>
       </div>
     </form>
   </div>

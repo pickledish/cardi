@@ -1,5 +1,7 @@
 import dayjs from 'dayjs'
 
+import { incrementBoard, decrementBoard } from './board.js'
+
 // ----------------------------------------------------------------------------
 // Secret inner workings
 // ----------------------------------------------------------------------------
@@ -16,7 +18,7 @@ import dayjs from 'dayjs'
 // we'll need to do no more than ~3 API calls :)
 
 // ~30ms per call means we'll be below 100ms always, which is good
-// optimization tip, for search box searches, always use biggest limit
+// optimization todo, for search box searches, always use biggest limit
 
 async function exponentialSearch(client, params, desiredPage) {
   console.log(`Starting exponential search with params ${JSON.stringify(params)}...`)
@@ -158,16 +160,20 @@ export async function createSnippet(client, status, created, title, content, boa
   }
 
   try {
-    let data = await client.put(params).promise();
-    return data;
+    let noteResult = await client.put(params).promise();
+    let boardResults = await Promise.all(boards.map(async (board) => {
+      return incrementBoard(client, board, status);
+    }));
+    return noteResult;
   } catch (err) {
     console.log(err);
     throw err;
   }
 }
 
-export async function deleteSnippet(client, status, created) {
-
+export async function deleteSnippet(client, status, created, boards) {
+  // boards isn't necessary to delete the snippet,
+  // but we do want to reconcile the board counts now too
   let params = {
     'TableName': 'cardi-notes',
     'Key': {
@@ -176,7 +182,10 @@ export async function deleteSnippet(client, status, created) {
     },
   };
   try {
-    let data = await client.delete(params).promise();
+    let noteResult = await client.delete(params).promise();
+    let boardResults = await Promise.all(boards.map(async (board) => {
+      return decrementBoard(client, board, status);
+    }));
     return true;
   } catch (err) {
     console.log(err);
@@ -196,7 +205,7 @@ export async function changeStatus(client, oldStatus, created, newStatus) {
       oldSnippet.boards,
       oldSnippet.search,
     );
-    return await deleteSnippet(client, oldStatus, created);
+    return await deleteSnippet(client, oldStatus, created, oldSnippet.boards);
   } catch (err) {
     console.log(err);
     throw err;
