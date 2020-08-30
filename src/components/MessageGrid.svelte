@@ -7,6 +7,7 @@
 
   import MessageTile from './MessageTile.svelte';
   import ChangeTagModal from './ChangeTagModal.svelte'
+  import ModalCardLarge from './ModalCardLarge.svelte'
   import Icon from './Icon.svelte'
 
   import { currBoard, boardMap, noteList, tiles_checked, show_new_snippet_modal } from '../store.js';
@@ -65,6 +66,7 @@
 
 </style>
 
+<ModalCardLarge/>
 <ChangeTagModal bind:show_modal={show_tag_modal} action={modal_action}/>
 
 <div class="flex justify-between items-center w-auto h-16 mt-2">

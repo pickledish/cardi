@@ -2,7 +2,7 @@
 
   import dayjs from 'dayjs'
 
-  import { tiles_checked, boardMap, currBoard } from '../store.js'
+  import { tiles_checked, boardMap, currBoard, shownNote } from '../store.js'
 
   import Checkbox from './Checkbox.svelte'
 
@@ -37,9 +37,9 @@
       </div>
     </div>
     <div class="py-2">
-      <a href="/#/message/{created}">
-        <span class="text-lg">{#if title !== null}{title}{:else}{content}{/if}</span>
-      </a>
+      <span class="text-lg" on:click={() => $shownNote = created}>
+        {#if title !== null}{title}{:else}{content}{/if}
+      </span>
     </div>
     {#if boards.length !== 0}
     <div class="py-2">

@@ -80,3 +80,4 @@ export const boardMap = derived(boardList, l => listToMap(l, "created"));
 
 export const tiles_checked = writable(new Set());
 export const show_new_snippet_modal = writable(false);
+export const shownNote = writable(null);
