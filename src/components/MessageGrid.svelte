@@ -11,6 +11,7 @@
 
   import { currBoard, boardMap, noteList, tiles_checked, show_new_snippet_modal } from '../store.js';
   import { changeStatus } from '../dynamodb/note.js'
+  import { documentClient } from '../dynamodb/client.js'
 
   let show_tag_modal = false;
   let modal_action = "";

@@ -1,5 +1,6 @@
 # Don't include generated files
 build/
+.DS_Store
 
 # Logs
 logs

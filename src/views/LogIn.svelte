@@ -29,27 +29,27 @@
 </script>
 
 <div class="h-full w-full flex flex-col justify-center items-center">
-	<div class="text-3xl mb-6">~ existing snipper ~</div>
-  <div class="w-4/5 md:w-2/5 max-w-sm rounded shadow border border-gray-100 bg-white break-words p-8">
+	<div class="text-3xl mb-12 -mt-12">Welcome to Cardi</div>
+  <div class="w-4/5 max-w-md rounded shadow border border-gray-100 bg-white break-words p-8">
     <form class="w-full h-full">
-      <div class="md:flex md:items-center mb-6">
-        <div class="md:w-1/3">
+      <div class="md:flex md:items-center mb-4">
+        <div class="md:w-40">
           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="accesskey">
             Access Key
           </label>
         </div>
-        <div class="md:w-2/3">
+        <div class="md:w-full">
           <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700" id="accesskey" type="text" placeholder="AKIA...">
         </div>
       </div>
-      <div class="md:flex md:items-center mb-6">
-        <div class="md:w-1/3">
+      <div class="md:flex md:items-center mb-8">
+        <div class="md:w-40">
           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="secretkey">
             Secret Key
           </label>
         </div>
-        <div class="md:w-2/3">
-          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700" id="secretkey" type="password" placeholder="******************">
+        <div class="md:w-full">
+          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700" id="secretkey" type="password" placeholder="**********************">
         </div>
       </div>
       <div class="flex items-end justify-end mb-8">
@@ -57,8 +57,8 @@
         	<Icon kind="right"/>
         </button>
       </div>
-      <div class="flex items-center justify-center">
-      	<div class="text-xs">Don't have an account? <a href="/#/signup">Make one here</a></div>
+      <div class="flex items-center justify-center flex-col">
+        <div class="text-xs">AWS access keys? Read about <a href="https://github.com/pickledish/cardi/wiki/About">what makes Cardi different</a></div>
       </div>
     </form>
   </div>

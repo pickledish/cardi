@@ -7,6 +7,7 @@
 
   import { tiles_checked, noteMap } from '../store.js';
   import { changeBoards } from '../dynamodb/note.js'
+  import { documentClient } from '../dynamodb/client.js'
 
   export let show_modal = false;
   export let action; // "ADD" or "REMOVE"
