@@ -28,6 +28,8 @@
         title = await getTitle(content);
         search = toSearchKeys(title); // don't get keys from the URL
       } else {
+        // important to set title to null, rather than empty string
+        title = null;
         search = toSearchKeys(title + " " + content);
       }
 

@@ -43,7 +43,7 @@
     </div>
     {#if boards.length !== 0}
     <div class="py-2">
-      {#each boards as id}
+      {#each Array.from(boards.values) as id}
       <span
         class="inline-block rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 mr-2 cursor-pointer"
         on:click={() => $currBoard = id}

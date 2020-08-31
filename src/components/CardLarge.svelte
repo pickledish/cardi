@@ -11,7 +11,6 @@
   $: created_date = fullNote && dayjs(fullNote.created).format('MMM D, YYYY');
   $: updated_date = fullNote && dayjs(fullNote.updated).format('MMM D, YYYY');
 
-
 </script>
 
 <div>
@@ -27,7 +26,7 @@
   </div>
   {#if fullNote.boards.length !== 0}
   <div class="py-2">
-    {#each fullNote.boards as id}
+    {#each Array.from(fullNote.boards.values) as id}
     <span
       class="inline-block rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 mr-2 cursor-pointer"
       on:click={() => $currBoard = id}
