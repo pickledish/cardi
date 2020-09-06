@@ -153,8 +153,8 @@ export async function createSnippet(client, status, created, title, content, boa
       "updated"  : epoch,
       "title"    : title,
       "content"  : content,
-      "boards"   : boards,
-      "search"   : search,
+      "boards"   : client.createSet(boards),
+      "search"   : client.createSet(search),
       "kind"     : "note",
     }
   }
