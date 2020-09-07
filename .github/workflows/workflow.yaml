@@ -1,0 +1,25 @@
+name: Build and Deploy
+
+on:
+  push:
+    tags: ["*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout master, version ${{ GITHUB_SHA }}
+      uses: actions/checkout@v2
+    - name: Set up Node.js version 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Run the build script for site
+      run: npm run build
+    - name: Publish the built public site
+      uses: netlify/actions/cli@master
+      with:
+        args: deploy --dir public
+      env:
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
