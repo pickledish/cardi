@@ -22,9 +22,11 @@
 
 </script>
 
+{#if creds}
+<Navbar/>
+{/if}
 <div class="container mx-auto h-full">
   {#if creds}
-  <Navbar/>
   <div class="flex mx-2">
     <div class="w-1/5 min-w-14rem hidden md:block">
       <div class="pt-4 pr-6"><Sidebar/></div>
