@@ -72,7 +72,16 @@ export const noteMap = derived(
 // ----------------------------------------------------------------------------
 
 export const boardList = writable([]);
-export const boardMap = derived(boardList, l => listToMap(l, "created"));
+
+export const sortedBoardList = derived(
+  boardList,
+  l => l.slice().sort((first, second) => first.name > second.name)
+);
+
+export const boardMap = derived(
+  boardList,
+  l => listToMap(l, "created")
+);
 
 // ----------------------------------------------------------------------------
 // Utility stores, not really global, could probably go somewhere else

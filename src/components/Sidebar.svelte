@@ -8,7 +8,7 @@
 
   import { documentClient } from '../dynamodb/client.js'
   import { getBoards } from '../dynamodb/board.js'
-  import { currArchived, currAscending, currAfterMs, currBoard, boardList } from '../store.js'
+  import { currArchived, currAscending, currAfterMs, currBoard, boardList, sortedBoardList } from '../store.js'
 
   import { onMount } from 'svelte';
 
@@ -24,7 +24,7 @@
 
   // Support filtering so people don't have to look at them all at once
   let prefix = "";
-	$: shownBoards = $boardList.filter(b => b.name.startsWith(prefix));
+	$: shownBoards = $sortedBoardList.filter(b => b.name.startsWith(prefix));
 
 </script>
 
