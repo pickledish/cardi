@@ -10,11 +10,11 @@
 
 <header class="flex justify-between items-center z-10 w-full h-12 px-4 w-auto bg-peach shadow">
   <section>
-    <a href="/#/" class="navbar-brand mr-2 text-red-500">Cardi</a>
+    <span class="text-red-500">CARDI NOTES &nbsp;·&nbsp;</span>
     <span class="hidden md:inline">
-      <a href="#/login">Login</a>
-      <a href="#/">Overview</a>
-      <a href="...">Account</a>
+      <a href="#/app/">Overview &nbsp;·&nbsp;</a>
+      <a href="https://github.com/pickledish/cardi/wiki/About">About &nbsp;·&nbsp;</a>
+      <a href="https://github.com/pickledish/cardi/wiki/Setup">Setup</a>
     </span>
   </section>
   <section>
