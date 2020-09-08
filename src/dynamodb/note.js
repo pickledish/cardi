@@ -145,6 +145,14 @@ export async function createSnippet(client, status, created, title, content, boa
     created = epoch;
   }
 
+  if (boards.length == 0) {
+    boards = [0];
+  }
+
+  if (search.length == 0) {
+    search = [""];
+  }
+
   var params = {
     'TableName': 'cardi-notes',
     'Item': {

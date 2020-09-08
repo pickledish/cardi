@@ -23,19 +23,24 @@
       let title = "";
       let search = [];
 
-      if (title_str == "" && isUrl(content)) {
+      if (title_str.length > 0) {
+        // always give a user title priority first
+        title = title_str;
+        search = toSearchKeys(title + " " + content);
+      } else if (isUrl(content)) {
         console.log("Determined this is a URL, fetching title...");
         title = await getTitle(content);
-        search = toSearchKeys(title); // don't get keys from the URL
+        search = toSearchKeys(title);
       } else {
         // important to set title to null, rather than empty string
         title = null;
-        search = toSearchKeys(title + " " + content);
+        search = toSearchKeys(content);
       }
 
       let accessKey = Cookie.get('awsAccessKey');
       let secretKey = Cookie.get('awsSecretKey');
       let client = documentClient(accessKey, secretKey);
+
       let response = await createSnippet(client, "current", null, title, content, boards, search);
 
       window.location.reload();
