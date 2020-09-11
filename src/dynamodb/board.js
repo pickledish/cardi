@@ -40,7 +40,6 @@ export async function incrementBoard(client, boardId, status) {
 }
 
 export async function decrementBoard(client, boardId, status) {
-  console.log("Decrementing board...")
   let params = {
     'TableName': 'cardi-boards',
     'Key': {

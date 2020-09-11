@@ -51,18 +51,21 @@ async function exponentialSearchInternal(client, params, remaining, limit, lastK
   }
 }
 
-// Input struct looks like this:
-// {
-//   "status": "archived",
-//   "afterMs": 123,
-//   "board": 456,
-//   "search": ["filipino"],
-//   "ascending": true,
-//   "pageSize": 20,
-// }
-// We need to turn it into something dynamo will accept
+// ----------------------------------------------------------------------------
+// Helpers to get the DynamoDB operation param struct as JSON
+// ----------------------------------------------------------------------------
 
-function inputToDynamo(paramStruct) {
+function getOneOperation(status, created) {
+  return {
+    'TableName': 'cardi-notes',
+    'Key': {
+      'status': status,
+      'created': created,
+    }
+  }
+}
+
+function getManyOperation(status, afterMs, board, search, ascending) {
   let key_filters = [
     `#status = :status`,
     `#created > :afterMs`,
@@ -73,17 +76,17 @@ function inputToDynamo(paramStruct) {
     "#created": "created",
   }
   let expressionAttributeValues = {
-    ":status": paramStruct["status"],
-    ":afterMs": paramStruct["afterMs"],
+    ":status": status,
+    ":afterMs": afterMs,
   }
-  if (paramStruct["board"]) {
+  if (board) {
     other_filters.push('contains (#boards, :board)');
     expressionAttributeNames["#boards"] = "boards";
-    expressionAttributeValues[":board"] = paramStruct["board"];
+    expressionAttributeValues[":board"] = board;
   }
-  if (paramStruct["search"].length > 0) {
+  if (search.length > 0) {
     expressionAttributeNames["#search"] = "search";
-    paramStruct["search"].forEach(key => {
+    search.forEach(key => {
       other_filters.push(`contains (#search, :${key})`);
       expressionAttributeValues[`:${key}`] = key;
     });
@@ -94,70 +97,27 @@ function inputToDynamo(paramStruct) {
     'FilterExpression': other_filters.join(' and ') || null,
     'ExpressionAttributeNames': expressionAttributeNames,
     'ExpressionAttributeValues': expressionAttributeValues,
-    'ScanIndexForward': paramStruct["ascending"],
-  };
-}
-
-// ----------------------------------------------------------------------------
-// Public API
-// ----------------------------------------------------------------------------
-
-export async function getSnippets(client, paramStruct) {
-
-  let dynamoParams = inputToDynamo(paramStruct);
-
-  try {
-    let data = await exponentialSearch(
-      client,
-      dynamoParams,
-      paramStruct["pageSize"]
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-    return err;
+    'ScanIndexForward': ascending,
   }
 }
 
-export async function getSnippet(client, status, created) {
-
-  let params = {
-    'TableName': 'cardi-notes',
-    'Key': {
-      'status': status,
-      'created': created,
-    },
-  };
-  try {
-    let data = await client.get(params).promise();
-    return data['Item'];
-  } catch (err) {
-    console.log(err);
-    return err;
-  }
-}
-
-export async function createSnippet(client, status, created, title, content, boards, search) {
+function createOperation(client, status, created, title, content, boards, search) {
 
   let epoch = dayjs().valueOf();
 
-  if (!created) {
-    created = epoch;
-  }
-
-  if (boards.length == 0) {
+  if (!boards || boards.length == 0) {
     boards = [0];
   }
 
-  if (search.length == 0) {
+  if (!search || search.length == 0) {
     search = [""];
   }
 
-  var params = {
+  return {
     'TableName': 'cardi-notes',
     'Item': {
       "status"   : status,
-      "created"  : created,
+      "created"  : created ? created : epoch,
       "updated"  : epoch,
       "title"    : title,
       "content"  : content,
@@ -166,63 +126,20 @@ export async function createSnippet(client, status, created, title, content, boa
       "kind"     : "note",
     }
   }
-
-  try {
-    let noteResult = await client.put(params).promise();
-    let boardResults = await Promise.all(boards.map(async (board) => {
-      return incrementBoard(client, board, status);
-    }));
-    return noteResult;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
 }
 
-export async function deleteSnippet(client, status, created, boards) {
-  // boards isn't necessary to delete the snippet,
-  // but we do want to reconcile the board counts now too
-  let params = {
+function deleteOperation(status, created) {
+  return {
     'TableName': 'cardi-notes',
     'Key': {
       'status': status,
       'created': created,
-    },
-  };
-  try {
-    let noteResult = await client.delete(params).promise();
-    let boardResults = await Promise.all(boards.map(async (board) => {
-      return decrementBoard(client, board, status);
-    }));
-    return true;
-  } catch (err) {
-    console.log(err);
-    return err;
+    }
   }
 }
 
-export async function changeStatus(client, oldStatus, created, newStatus) {
-  try {
-    let oldSnippet = await getSnippet(client, oldStatus, created);
-    let ok = await createSnippet(
-      client,
-      newStatus,
-      oldSnippet.created,
-      oldSnippet.title,
-      oldSnippet.content,
-      oldSnippet.boards,
-      oldSnippet.search,
-    );
-    return await deleteSnippet(client, oldStatus, created, oldSnippet.boards);
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-}
-
-export async function changeBoards(client, status, created, boardIds, action) {
-  // action must be either ADD or REMOVE
-  let params = {
+function updateBoardOperation(status, created, action, boards) {
+  return {
     'TableName': 'cardi-notes',
     'Key': {
       'status': status,
@@ -231,15 +148,163 @@ export async function changeBoards(client, status, created, boardIds, action) {
     'AttributeUpdates': {
       'boards': {
         'Action': action,
-        'Value': boardIds,
+        'Value': boards,
       }
-    },
+    }
   }
+}
+
+// ----------------------------------------------------------------------------
+// Public API
+// ----------------------------------------------------------------------------
+
+export async function getSnippets(client, struct) {
+
+  let operation = getManyOperation(
+    struct.status,
+    struct.after,
+    struct.board,
+    struct.search,
+    struct.ascending
+  );
+
   try {
-    let data = await client.update(params).promise();
+    let data = await exponentialSearch(client, operation, paramStruct["pageSize"]);
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+export async function getSnippet(client, status, created) {
+
+  let operation = getOneOperation(status, created);
+
+  try {
+    let data = await client.get(operation).promise();
     return data['Item'];
   } catch (err) {
     console.log(err);
-    return err;
+    throw err;
+  }
+}
+
+export async function createSnippet(client, status, created, title, content, boards, search) {
+
+  // One operation to create the new snippet in the cardi-notes table
+  let createOperation = [{
+    "Put": createOperation(client, status, created, title, content, boards, search)
+  }];
+
+  // One operation PER BOARD to the cardi-boards table to update counts
+  let boardOperations = boards.map(board => {
+    "Update": incrementOperation(client, board, status)
+  });
+
+  // Combine all operations into a single transaction for DynamoDB
+  let transactionParams = {
+    "TransactItems": createOperation.concat(boardOperations)
+  };
+
+  try {
+    let result = await client.transactWrite(transactionParams).promise();
+    return true;
+  } catch (err) {
+    console.log(`Unable to create new snippet due to error from AWS: ${err}`);
+    throw err;
+  }
+}
+
+export async function deleteSnippet(client, status, created, boards) {
+
+  // One operation to delete the old snippet in the cardi-notes table
+  let deleteOperation = [{
+    "Delete": deleteOperation(client, status)
+  }];
+
+  // One operation PER BOARD to the cardi-boards table to update counts
+  let boardOperations = boards.map(board => {
+    "Update": decrementOperation(client, board, status)
+  });
+
+  // Combine all operations into a single transaction for DynamoDB
+  let transactionParams = {
+    "TransactItems": deleteOperation.concat(boardOperations)
+  };
+
+  try {
+    let result = await client.transactWrite(transactionParams).promise();
+    return true;
+  } catch (err) {
+    console.log(`Unable to delete old snippet due to error from AWS: ${err}`);
+    throw err;
+  }
+}
+
+export async function changeStatus(client, oldStatus, created, newStatus) {
+
+  let o = await getSnippet(client, oldStatus, created);
+
+  // One operation to delete the old snippet in the cardi-notes table
+  let deleteOperation = [{
+    "Delete": deleteOperation(client, status)
+  }];
+
+  // One operation to create the new snippet in the cardi-notes table
+  let createOperation = [{
+    "Put": createOperation(client, newStatus, created, o.title, o.content, o.boards, o.search)
+  }];
+
+  // One operation PER BOARD to the cardi-boards table to decrease old status
+  let decBoardOperations = o.boards.map(board => {
+    "Update": decrementOperation(client, board, oldStatus)
+  });
+
+  // One operation PER BOARD to the cardi-boards table to increase new status
+  let incBoardOperations = o.boards.map(board => {
+    "Update": incrementOperation(client, board, newStatus)
+  });
+
+  // Combine all operations into a single transaction for DynamoDB
+  let transactionParams = {
+    "TransactItems": deleteOperation + createOperation + decBoardOperations + incBoardOperations
+  };
+
+  try {
+    let result = await client.transactWrite(transactionParams).promise();
+    return true;
+  } catch (err) {
+    console.log(`Unable to change snippet status due to error from AWS: ${err}`);
+    throw err;
+  }
+}
+
+export async function changeBoards(client, status, created, boards, action) {
+
+  // One operation to change the existing snippet in the cardi-notes table
+  let changeOperation = [{
+    "Update": updateBoardOperation(status, created, action, boards)
+  }];
+
+  // Choose here whether we're incrementing or decrementing board counts
+  let boardFunction = (action == "ADD") ? incrementOperation ? decrementOperation;
+
+  // One operation PER BOARD to the cardi-boards table to update counts
+  let boardOperations = boards.map(board => {
+    "Update": boardFunction(client, board, status)
+  });
+
+  // Combine all operations into a single transaction for DynamoDB
+  let transactionParams = {
+    "TransactItems": changeOperation.concat(boardOperations)
+  };
+
+  try {
+    let result = await client.transactWrite(transactionParams).promise();
+    return true;
+  } catch (err) {
+    console.log(`Unable to change snippet boards due to error from AWS: ${err}`);
+    throw err;
   }
 }
