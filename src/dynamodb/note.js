@@ -162,14 +162,14 @@ export async function getSnippets(client, struct) {
 
   let operation = getManyOperation(
     struct.status,
-    struct.after,
+    struct.afterMs,
     struct.board,
     struct.search,
     struct.ascending
   );
 
   try {
-    let data = await exponentialSearch(client, operation, paramStruct["pageSize"]);
+    let data = await exponentialSearch(client, operation, struct["pageSize"]);
     return data;
   } catch (err) {
     console.log(err);
@@ -198,9 +198,9 @@ export async function createSnippet(client, status, created, title, content, boa
   }];
 
   // One operation PER BOARD to the cardi-boards table to update counts
-  let boardOperations = boards.map(board => {
+  let boardOperations = boards.map(board => ({
     "Update": incrementOperation(client, board, status)
-  });
+  }));
 
   // Combine all operations into a single transaction for DynamoDB
   let transactionParams = {
@@ -224,9 +224,9 @@ export async function deleteSnippet(client, status, created, boards) {
   }];
 
   // One operation PER BOARD to the cardi-boards table to update counts
-  let boardOperations = boards.map(board => {
+  let boardOperations = boards.map(board => ({
     "Update": decrementOperation(client, board, status)
-  });
+  }));
 
   // Combine all operations into a single transaction for DynamoDB
   let transactionParams = {
@@ -248,7 +248,7 @@ export async function changeStatus(client, oldStatus, created, newStatus) {
 
   // One operation to delete the old snippet in the cardi-notes table
   let deleteOperation = [{
-    "Delete": deleteOperation(client, status)
+    "Delete": deleteOperation(client, oldStatus)
   }];
 
   // One operation to create the new snippet in the cardi-notes table
@@ -257,14 +257,14 @@ export async function changeStatus(client, oldStatus, created, newStatus) {
   }];
 
   // One operation PER BOARD to the cardi-boards table to decrease old status
-  let decBoardOperations = o.boards.map(board => {
+  let decBoardOperations = o.boards.map(board => ({
     "Update": decrementOperation(client, board, oldStatus)
-  });
+  }));
 
   // One operation PER BOARD to the cardi-boards table to increase new status
-  let incBoardOperations = o.boards.map(board => {
+  let incBoardOperations = o.boards.map(board => ({
     "Update": incrementOperation(client, board, newStatus)
-  });
+  }));
 
   // Combine all operations into a single transaction for DynamoDB
   let transactionParams = {
@@ -288,12 +288,12 @@ export async function changeBoards(client, status, created, boards, action) {
   }];
 
   // Choose here whether we're incrementing or decrementing board counts
-  let boardFunction = (action == "ADD") ? incrementOperation ? decrementOperation;
+  let boardFunction = (action == "ADD") ? incrementOperation : decrementOperation;
 
   // One operation PER BOARD to the cardi-boards table to update counts
-  let boardOperations = boards.map(board => {
+  let boardOperations = boards.map(board => ({
     "Update": boardFunction(client, board, status)
-  });
+  }));
 
   // Combine all operations into a single transaction for DynamoDB
   let transactionParams = {
