@@ -2,8 +2,11 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
+import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
+
+import dayjs from 'dayjs';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -16,6 +19,13 @@ export default {
     file: 'public/build/bundle.js',
   },
   plugins: [
+
+    replace({
+      "COMMIT_SHA_PLACEHOLDER": process.env.GITHUB_SHA,
+      "COMMIT_REF_PLACEHOLDER": process.env.GITHUB_REF,
+      "BUILD_DATE_PLACEHOLDER": () => dayjs().format('MMM D, YYYY')
+    }),
+
     svelte({
       preprocess: sveltePreprocess({ postcss: true }),
       // enable run-time checks when not in production
@@ -36,6 +46,7 @@ export default {
       browser: true,
       dedupe: ['svelte'],
     }),
+
     commonjs(),
 
     // In dev mode, call `npm run start` once

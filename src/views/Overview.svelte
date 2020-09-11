@@ -8,6 +8,7 @@
   import Navbar from '../components/Navbar.svelte'
   import MessageGrid from '../components/MessageGrid.svelte';
   import Sidebar from '../components/Sidebar.svelte'
+  import Footer from '../components/Footer.svelte'
 
   let creds = false;
 
@@ -25,7 +26,7 @@
 {#if creds}
 <Navbar/>
 {/if}
-<div class="container mx-auto h-full">
+<div class="container mx-auto h-auto">
   {#if creds}
   <div class="flex mx-2">
     <div class="w-1/5 min-w-14rem hidden md:block">
@@ -39,3 +40,4 @@
   <LogIn/>
   {/if}
 </div>
+<Footer/>
