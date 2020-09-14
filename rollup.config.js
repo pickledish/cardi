@@ -21,8 +21,8 @@ export default {
   plugins: [
 
     replace({
-      "COMMIT_SHA_PLACEHOLDER": process.env.GITHUB_SHA,
-      "COMMIT_REF_PLACEHOLDER": process.env.GITHUB_REF,
+      "COMMIT_SHA_PLACEHOLDER": (process.env.GITHUB_SHA || "undefined").slice(0, 7),
+      "COMMIT_REF_PLACEHOLDER": (process.env.GITHUB_REF || "undefined").replace("refs/tags/", ""),
       "BUILD_DATE_PLACEHOLDER": () => dayjs().format('MMM D, YYYY')
     }),
 
