@@ -12,7 +12,7 @@
   <section>
     <span class="text-red-500">CARDI NOTES &nbsp;·&nbsp;</span>
     <span class="hidden md:inline">
-      <a href="#/app/">Overview &nbsp;·&nbsp;</a>
+      <a href="#/overview/">Overview &nbsp;·&nbsp;</a>
       <a href="https://github.com/pickledish/cardi/wiki/About">About &nbsp;·&nbsp;</a>
       <a href="https://github.com/pickledish/cardi/wiki/Setup">Setup</a>
     </span>

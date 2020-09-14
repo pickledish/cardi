@@ -59,7 +59,7 @@ function setQueryParam(paramName, newValue) {
   }
 
   let paramString = params.toString() == "" ? "" : "?" + params.toString();
-  window.history.pushState({}, '', "/#/app" +  paramString);
+  window.history.pushState({}, '', "/#/overview" +  paramString);
 }
 
 function clearQueryParam(paramName) {
@@ -69,7 +69,7 @@ function clearQueryParam(paramName) {
   params.delete(paramName);
 
   let paramString = params.toString() == "" ? "" : "?" + params.toString();
-  window.history.pushState({}, '', "/#/app" +  paramString);
+  window.history.pushState({}, '', "/#/overview" +  paramString);
 }
 
 /*

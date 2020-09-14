@@ -19,7 +19,7 @@
       let response = await ensureTables(client);
       Cookie.set("awsAccessKey", accessKey);
       Cookie.set("awsSecretKey", secretKey);
-      window.location.hash = "#/app";
+      window.location.hash = "#/overview";
       window.location.reload();
     } catch (err) {
       alert(err);

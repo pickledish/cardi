@@ -6,7 +6,7 @@
 
 	const routes = {
       //'/': About,
-      '/app': Overview,
+      '/overview': Overview,
 	    '/login': LogIn,
 	    // This is optional, but if present it must be the last
 	    '*': Overview,
