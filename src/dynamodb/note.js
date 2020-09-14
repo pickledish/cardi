@@ -1,6 +1,10 @@
 import dayjs from 'dayjs'
 
-import { incrementBoard, decrementBoard } from './board.js'
+import { get } from 'svelte/store';
+
+import { incrementBoardOp, decrementBoardOp, createBoardOp, deleteBoardOp, decIncBoardOp } from './board.js'
+
+import { boardMap, noteMap } from '../store.js'
 
 // ----------------------------------------------------------------------------
 // Secret inner workings
@@ -101,7 +105,7 @@ function getManyOperation(status, afterMs, board, search, ascending) {
   }
 }
 
-function createOperation(client, status, created, title, content, boards, search) {
+function createSnippetOp(client, status, created, title, content, boards, search) {
 
   let epoch = dayjs().valueOf();
 
@@ -114,31 +118,35 @@ function createOperation(client, status, created, title, content, boards, search
   }
 
   return {
-    'TableName': 'cardi-notes',
-    'Item': {
-      "status"   : status,
-      "created"  : created ? created : epoch,
-      "updated"  : epoch,
-      "title"    : title,
-      "content"  : content,
-      "boards"   : client.createSet(boards),
-      "search"   : client.createSet(search),
-      "kind"     : "note",
+    "Put": {
+      'TableName': 'cardi-notes',
+      'Item': {
+        "status"   : status,
+        "created"  : created ? created : epoch,
+        "updated"  : epoch,
+        "title"    : title,
+        "content"  : content,
+        "boards"   : client.createSet(boards),
+        "search"   : client.createSet(search),
+        "kind"     : "note",
+      }
     }
   }
 }
 
-function deleteOperation(status, created) {
+function deleteSnippetOp(status, created) {
   return {
-    'TableName': 'cardi-notes',
-    'Key': {
-      'status': status,
-      'created': created,
+    "Delete": {
+      'TableName': 'cardi-notes',
+      'Key': {
+        'status': status,
+        'created': created,
+      }
     }
   }
 }
 
-function updateBoardOperation(status, created, action, boards) {
+function updateBoardOp(status, created, action, boards) {
   return {
     'TableName': 'cardi-notes',
     'Key': {
@@ -193,14 +201,18 @@ export async function getSnippet(client, status, created) {
 export async function createSnippet(client, status, created, title, content, boards, search) {
 
   // One operation to create the new snippet in the cardi-notes table
-  let createOperation = [{
-    "Put": createOperation(client, status, created, title, content, boards, search)
-  }];
+  let createOperation = [
+    createSnippetOp(client, status, created, title, content, boards, search)
+  ];
 
   // One operation PER BOARD to the cardi-boards table to update counts
-  let boardOperations = boards.map(board => ({
-    "Update": incrementOperation(client, board, status)
-  }));
+  let boardOperations = boards.map(board => {
+    if (get(boardMap).has(board)) {
+      return incrementBoardOp(board, status);
+    } else {
+      return createBoardOp(board, status); // this is confusing, board here is a name, not ID!
+    }
+  });
 
   // Combine all operations into a single transaction for DynamoDB
   let transactionParams = {
@@ -219,14 +231,19 @@ export async function createSnippet(client, status, created, title, content, boa
 export async function deleteSnippet(client, status, created, boards) {
 
   // One operation to delete the old snippet in the cardi-notes table
-  let deleteOperation = [{
-    "Delete": deleteOperation(client, status)
-  }];
+  let deleteOperation = [
+    deleteSnippetOp(client, status)
+  ];
 
   // One operation PER BOARD to the cardi-boards table to update counts
-  let boardOperations = boards.map(board => ({
-    "Update": decrementOperation(client, board, status)
-  }));
+  let boardOperations = boards.map(board => {
+    let existing = get(boardMap).get(board);
+    if (existing.current + existing.archived <= 1) {
+      return deleteBoardOp(board);
+    } else {
+      return decrementBoardOp(board, status);
+    }
+  });
 
   // Combine all operations into a single transaction for DynamoDB
   let transactionParams = {
@@ -244,31 +261,25 @@ export async function deleteSnippet(client, status, created, boards) {
 
 export async function changeStatus(client, oldStatus, created, newStatus) {
 
-  let o = await getSnippet(client, oldStatus, created);
+  let o = get(noteMap).get(created);
 
   // One operation to delete the old snippet in the cardi-notes table
-  let deleteOperation = [{
-    "Delete": deleteOperation(client, oldStatus)
-  }];
+  let deleteOp = [
+    deleteSnippetOp(oldStatus, created)
+  ];
 
   // One operation to create the new snippet in the cardi-notes table
-  let createOperation = [{
-    "Put": createOperation(client, newStatus, created, o.title, o.content, o.boards, o.search)
-  }];
+  let createOp = [
+    createSnippetOp(client, newStatus, created, o.title, o.content, o.boards.values, o.search.values)
+  ];
 
   // One operation PER BOARD to the cardi-boards table to decrease old status
-  let decBoardOperations = o.boards.map(board => ({
-    "Update": decrementOperation(client, board, oldStatus)
-  }));
-
-  // One operation PER BOARD to the cardi-boards table to increase new status
-  let incBoardOperations = o.boards.map(board => ({
-    "Update": incrementOperation(client, board, newStatus)
-  }));
+  // No need to worry about creating or deleting boards in this case
+  let boardOps = o.boards.values.map(board => decIncBoardOp(board, oldStatus, newStatus));
 
   // Combine all operations into a single transaction for DynamoDB
   let transactionParams = {
-    "TransactItems": deleteOperation + createOperation + decBoardOperations + incBoardOperations
+    "TransactItems": deleteOp.concat(createOp.concat(boardOps)),
   };
 
   try {
