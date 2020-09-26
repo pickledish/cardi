@@ -26,7 +26,11 @@ module.exports = {
       'tealish': '#7bdfd0',
       'tealish-dark': '#eeeeee',
     }),
-    extend: {}
+    extend: {
+      padding: {
+        '1-5': '0.33rem',
+      },
+    }
   },
   variants: {},
   plugins: []
