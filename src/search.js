@@ -15,8 +15,6 @@ function tokenize(input) {
   return tokens.filter(word => word.length > 1);
 }
 
-// todo: also remove duplicates
-
 function stopwords(tokens) {
   return tokens.filter(word => !stopWords.has(word));
 }
@@ -26,5 +24,6 @@ function stemmer(tokens) {
 }
 
 export function toSearchKeys(input) {
-  return stemmer(stopwords(tokenize(input)));
+  let keys = stemmer(stopwords(tokenize(input)));
+  return Array.from(new Set(keys));
 }
