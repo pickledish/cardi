@@ -75,7 +75,7 @@ export const boardList = writable([]);
 
 export const sortedBoardList = derived(
   boardList,
-  l => l.slice().sort((first, second) => first.name > second.name)
+  l => l.slice().sort((first, second) => first.name > second.name ? 1 : -1)
 );
 
 export const boardMap = derived(
