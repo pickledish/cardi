@@ -21,7 +21,7 @@ The best idea I was able to come up with involved storing your notes privately, 
 In order to start using Cardi to keep notes, the process is short and simple:
 
 1. Make sure you've created a personal AWS account
-    - If you're not up for learning a bit about AWS, that's ok, but you may want to try a different solution for now
+    - If you're not up for learning a bit about AWS, that's ok, but may want to try a different solution for now
 1. Follow along with the [setup guide](https://github.com/pickledish/cardi/wiki/Setup) to create necessary AWS access keys
     - These keys are only ever stored in your own browser and sent to AWS, **never anywhere else**
 1. Visit [cardinotes.app](https://www.cardinotes.app) and enter the new credentials you just created
