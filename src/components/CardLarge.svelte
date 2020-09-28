@@ -2,6 +2,8 @@
 
   import dayjs from 'dayjs'
 
+  import marked from 'marked'
+
   import { noteMap, boardMap, currBoard } from '../store.js'
 
   export let created;
@@ -22,7 +24,7 @@
     {created_date} && {updated_date}
   </div>
   <div>
-    {fullNote.content}
+    {@html marked(fullNote.content)}
   </div>
   {#if fullNote.boards.length !== 0}
   <div class="py-2">
