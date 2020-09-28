@@ -23,11 +23,11 @@
   <div class="text-light">
     {created_date} » {updated_date}
   </div>
-  <div class="py-4">
+  <div class="py-6">
     {@html marked(fullNote.content)}
   </div>
   {#if fullNote.boards.length !== 0}
-  <div class="py-2">
+  <div>
     {#each Array.from(fullNote.boards.values) as id}
     <span
       class="inline-block rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 mr-2 cursor-pointer"
