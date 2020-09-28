@@ -20,10 +20,10 @@
     <span class="text-2xl">{fullNote.title || "(no title)"}</span>
     <span>[edit]</span>
   </div>
-  <div>
-    {created_date} && {updated_date}
+  <div class="text-light">
+    {created_date} » {updated_date}
   </div>
-  <div>
+  <div class="py-4">
     {@html marked(fullNote.content)}
   </div>
   {#if fullNote.boards.length !== 0}
