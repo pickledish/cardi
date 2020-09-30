@@ -10,7 +10,7 @@
   import { documentClient } from '../dynamodb/client.js'
 
   export let show_modal = false;
-  export let action; // "ADD" or "REMOVE"
+  export let action; // "ADD" or "DELETE"
 
   let selected = null;
 

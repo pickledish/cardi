@@ -4,7 +4,7 @@ import { get } from 'svelte/store';
 
 import { incrementBoardOp, decrementBoardOp, createBoardOp, deleteBoardOp, decIncBoardOp } from './board.js'
 
-import { boardMap, noteMap } from '../store.js'
+import { boardMap, noteMap, inProgressBoards } from '../store.js'
 
 // ----------------------------------------------------------------------------
 // Secret inner workings
@@ -146,17 +146,17 @@ function deleteSnippetOp(status, created) {
   }
 }
 
-function updateBoardOp(status, created, action, boards) {
+function updateBoardOp(client, status, created, action, ids) {
   return {
-    'TableName': 'cardi-notes',
-    'Key': {
-      'status': status,
-      'created': created,
-    },
-    'AttributeUpdates': {
-      'boards': {
-        'Action': action,
-        'Value': boards,
+    "Update": {
+      'TableName': 'cardi-notes',
+      'Key': {
+        'status': status,
+        'created': created,
+      },
+      'UpdateExpression': `${action} boards :boards`,
+      'ExpressionAttributeValues': {
+        ':boards': client.createSet(ids),
       }
     }
   }
@@ -206,11 +206,12 @@ export async function createSnippet(client, status, created, title, content, boa
   ];
 
   // One operation PER BOARD to the cardi-boards table to update counts
-  let boardOperations = boards.map(board => {
-    if (get(boardMap).has(board)) {
-      return incrementBoardOp(board, status);
+  let boardOperations = boards.map(id => {
+    if (get(boardMap).has(id)) {
+      return incrementBoardOp(id, status);
     } else {
-      return createBoardOp(board, status); // this is confusing, board here is a name, not ID!
+      let name = get(inProgressBoards).get(id);
+      return createBoardOp(id, name, status);
     }
   });
 
@@ -274,7 +275,7 @@ export async function changeStatus(client, oldStatus, created, newStatus) {
   ];
 
   // One operation PER BOARD to the cardi-boards table to decrease old status
-  // No need to worry about creating or deleting boards in this case
+  // No need to worry about creating or deleting boards in this case, just switching status
   let boardOps = o.boards.values.map(board => decIncBoardOp(board, oldStatus, newStatus));
 
   // Combine all operations into a single transaction for DynamoDB
@@ -294,17 +295,29 @@ export async function changeStatus(client, oldStatus, created, newStatus) {
 export async function changeBoards(client, status, created, boards, action) {
 
   // One operation to change the existing snippet in the cardi-notes table
-  let changeOperation = [{
-    "Update": updateBoardOperation(status, created, action, boards)
-  }];
-
-  // Choose here whether we're incrementing or decrementing board counts
-  let boardFunction = (action == "ADD") ? incrementOperation : decrementOperation;
+  let changeOperation = [
+    updateBoardOp(client, status, created, action, boards)
+  ];
 
   // One operation PER BOARD to the cardi-boards table to update counts
-  let boardOperations = boards.map(board => ({
-    "Update": boardFunction(client, board, status)
-  }));
+  let boardOperations = boards.map(id => {
+    let existing = get(boardMap).get(id);
+    if ((action == "ADD") && !(existing)) {
+      // We're trying to add a new board that doesn't exist yet
+      return createBoardOp(id, get(inProgressBoards).get(id), status);
+    } else if (action == "ADD") {
+      // We're adding a board that already exists
+      return incrementBoardOp(id, status);
+    } else if ((action == "DELETE") && (existing.current + existing.archived <= 1)) {
+      // We're removing the last note that a board contains
+      return deleteBoardOp(id);
+    } else if (action == "DELETE") {
+      // We're decrementing a board that contains other notes
+      return decrementBoardOp(id, status);
+    } else {
+      throw new Error(`Unsupported action ${action}`)
+    }
+  });
 
   // Combine all operations into a single transaction for DynamoDB
   let transactionParams = {

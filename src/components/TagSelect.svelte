@@ -1,12 +1,26 @@
 <script>
 
+  import dayjs from 'dayjs';
+
   import Select from 'svelte-select';
 
-  import { boardList } from '../store.js'
+  import { boardList, inProgressBoards } from '../store.js'
 
   export let items = null;
 
   $: tags_for_select = $boardList.map(b => ({'label': b.name, 'value': b.created}));
+
+  // hook into the creation so we can make a timestamp here for new boards
+  // for more, see docs: https://github.com/rob-balfre/svelte-select
+  let customCreateItem = filterText => {
+    let now = dayjs().valueOf();
+    $inProgressBoards.set(now, filterText);
+    $inProgressBoards = $inProgressBoards;
+    return {
+      'label': filterText,
+      'value': now
+    };
+  };
 
 </script>
 
@@ -37,6 +51,7 @@
     isCreatable={true}
     optionIdentifier='label'
     placeholder='Tags'
+    createItem={customCreateItem}
     bind:selectedValue={items}
   />
 </div>

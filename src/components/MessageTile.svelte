@@ -41,7 +41,7 @@
         {#if title !== null}{title}{:else}{content}{/if}
       </span>
     </div>
-    {#if boards.length !== 0}
+    {#if boards && boards.length !== 0}
     <div class="py-2">
       {#each Array.from(boards.values) as id}
       <span

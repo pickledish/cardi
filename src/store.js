@@ -90,3 +90,7 @@ export const boardMap = derived(
 export const tiles_checked = writable(new Set());
 export const show_new_snippet_modal = writable(false);
 export const shownNote = writable(null);
+
+// map from timestamp -> name of new board we're about to create
+// necessary so we can remember the names of board IDs not persisted yet
+export const inProgressBoards = writable(new Map());

@@ -79,7 +79,7 @@
   {:else}
     <span>
       <button class="mx-2 p-2 rounded border border-gray-200 bg-gray-400" on:click={() => showModal("ADD")}>AddTag</button>
-      <button class="mx-2 p-2 rounded border border-gray-200 bg-gray-400" on:click={() => showModal("REMOVE")}>RemTag</button>
+      <button class="mx-2 p-2 rounded border border-gray-200 bg-gray-400" on:click={() => showModal("DELETE")}>RemTag</button>
       <button class="mx-2 p-2 rounded border border-gray-200 bg-gray-400" on:click={handleBatchArchive}>Archive</button>
       <button class="mx-2 p-2 rounded border border-gray-200 bg-gray-400">Delete</button>
     </span>

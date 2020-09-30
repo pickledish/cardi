@@ -60,12 +60,12 @@ export function decIncBoardOp(board, decStatus, incStatus) {
   }
 }
 
-export function createBoardOp(name, status) {
+export function createBoardOp(created, name, status) {
   return {
     "Put": {
       'TableName': 'cardi-boards',
       'Item': {
-        "created": dayjs().valueOf(),
+        "created": created,
         "archived": (status == "archived") ? 1 : 0,
         "current": (status == "current") ? 1 : 0,
         "name": name,
