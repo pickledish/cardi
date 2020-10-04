@@ -7,16 +7,6 @@ module.exports = {
       'display': ['Courier', 'sans-serif'],
       'body': ['Nunito', 'sans-serif']
     },
-    textColor: {
-      'primary': '#444444',
-      'secondary': '#444444',
-      'light': '#777777',
-      'tiffany': '#70dbc6',
-    },
-    minWidth: {
-      '0': '0',
-      '14rem': '14rem',
-    },
     backgroundColor: theme => ({
       ...theme('colors'),
       'desk': '#f4f2f0',
@@ -29,6 +19,16 @@ module.exports = {
     extend: {
       padding: {
         '1-5': '0.33rem',
+      },
+      textColor: {
+        'primary': '#444444',
+        'secondary': '#444444',
+        'light': '#777777',
+        'tiffany': '#70dbc6',
+      },
+      minWidth: {
+        '0': '0',
+        '14rem': '14rem',
       },
     }
   },
