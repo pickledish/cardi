@@ -45,12 +45,12 @@
       <span class="float-right">
         <button
           on:click="{() => show_modal = false}"
-          class="bg-gray-500 hover:bg-gray-600 text-white py-1 px-3 rounded">
+          class="bg-gray-500 hover:bg-gray-600 py-1 px-3 rounded">
           Cancel
         </button>
         <button
           on:click="{() => submit()}"
-          class="bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded">
+          class="bg-green-500 hover:bg-green-700 py-1 px-3 rounded">
           Submit
         </button>
       </span>

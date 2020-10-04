@@ -226,20 +226,22 @@ export async function createSnippet(client, status, created, title, content, boa
   }
 }
 
-export async function deleteSnippet(client, status, created, boards) {
+export async function deleteSnippet(client, created) {
+
+  let note = get(noteMap).get(created);
 
   // One operation to delete the old snippet in the cardi-notes table
   let deleteOperation = [
-    deleteSnippetOp(client, status)
+    deleteSnippetOp(note.status, created)
   ];
 
   // One operation PER BOARD to the cardi-boards table to update counts
-  let boardOperations = boards.map(board => {
+  let boardOperations = note.boards.values.map(board => {
     let existing = get(boardMap).get(board);
     if (existing.current + existing.archived <= 1) {
       return deleteBoardOp(board);
     } else {
-      return decrementBoardOp(board, status);
+      return decrementBoardOp(board, note.status);
     }
   });
 

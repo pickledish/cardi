@@ -11,7 +11,7 @@
   import Icon from './Icon.svelte'
 
   import { currBoard, boardMap, noteList, tiles_checked, show_new_snippet_modal } from '../store.js';
-  import { changeStatus } from '../dynamodb/note.js'
+  import { changeStatus, deleteSnippet } from '../dynamodb/note.js'
   import { documentClient } from '../dynamodb/client.js'
 
   let show_tag_modal = false;
@@ -55,6 +55,18 @@
     window.location.reload();
   }
 
+  async function handleBatchDelete() {
+    let accessKey = Cookie.get('awsAccessKey');
+    let secretKey = Cookie.get('awsSecretKey');
+    let client = documentClient(accessKey, secretKey);
+    let success = await Promise.all(
+      Array.from($tiles_checked).map(async (created) => {
+        return await deleteSnippet(client, created);
+      })
+    );
+    window.location.reload();
+  }
+
 </script>
 
 <style>
@@ -87,7 +99,7 @@
       <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={handleBatchArchive}>
         <Icon kind="archive"/>
       </button>
-      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer">
+      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={handleBatchDelete}>
         <Icon kind="trash"/>
       </button>
     </span>
