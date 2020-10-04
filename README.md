@@ -14,7 +14,7 @@ All note keeping tools I've seen so far operate on one of a few well-established
 
 Each of these solutions has one or more significant compromises in my eyes (centering around privacy, ease of use, and note accessibility), so I set out to make a tool that doesn't have the same disadvantages.
 
-The best idea I was able to come up with involved storing your notes privately, in a DynamoDB table in your own AWS account, while having a web-accessible frontend that's able (using managed access keys and the AWS SDK) to present and update these notes in a user-friendly way. This idea is what turned into Cardi!
+The best idea I was able to come up with involved storing your notes privately, in a DynamoDB table in your own AWS account, while having a web-accessible frontend that's able (using managed access keys and the AWS SDK) to present and update these notes in a user-friendly way. This idea is what turned into Cardi! You can read more in [the wiki](https://github.com/pickledish/cardi/wiki/About).
 
 ## Quick Start
 
@@ -24,13 +24,13 @@ In order to start using Cardi to keep notes, the process is short and simple:
     - If you're not up for learning a bit about AWS, that's ok, but may want to try a different solution for now
 1. Follow along with the [setup guide](https://github.com/pickledish/cardi/wiki/Setup) to create necessary AWS access keys
     - These keys are only ever stored in your own browser and sent to AWS, **never anywhere else**
-1. Visit [cardinotes.app](https://www.cardinotes.app) and enter the new credentials you just created
+1. Visit [cardinotes.app](https://www.cardinotes.app) and allow it to use the credentials you just created
     - This will automatically create the necessary DynamoDB tables when you first log in
 
 ## Features
 
 - Full markdown support in note content
-- Assign any number of "boards" (tags) to each note for simple organization
+- Assign a note to any number of "boards" (i.e. tags) for simple organization
 - Ability to archive notes that are no longer relevant
 - Automatic fetching of titles for URL notes
 - Quick filters based on board and/or date of note creation
