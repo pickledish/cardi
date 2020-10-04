@@ -3,14 +3,32 @@
 <head>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width,initial-scale=1'>
+  <meta name="description" content="A simple static frontend for notes in DynamoDB">
+  <meta name="theme-color" content="#f4f2f0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Cardi Notes">
 
 	<title>Cardi Notes</title>
 
-	<link rel='icon' type='image/png' href='/favicon.png'>
+	<link rel='icon' type='image/x-icon' href='/icons/icon-xparent-32.png'>
+  <link rel="apple-touch-icon" href="/icons/icon-maskable-180.png">
+  <link rel="manifest" href="/manifest.json" />
 
   <link rel='stylesheet' type='text/css' charset='utf-8' href='/nunito.css'/>
 	<link rel='stylesheet' type='text/css' charset='utf-8' href='/global.css'/>
 	<link rel='stylesheet' type='text/css' charset='utf-8' href='/build/bundle.css'/>
+
+  <script>
+    // Sets up the service worker for some offline capability
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/serviceworker.js')
+          .then(reg => console.log('Service worker registered.', reg))
+          .catch(err => console.log('Service worker failed to register', err));
+      });
+    }
+  </script>
 
   <script defer src='/aws-sdk-2.712.0.min.js'></script>
 	<script defer src='/build/bundle.js'></script>

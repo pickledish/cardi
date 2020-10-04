@@ -25,14 +25,11 @@ import { boardMap, noteMap, inProgressBoards } from '../store.js'
 // optimization todo, for search box searches, always use biggest limit
 
 async function exponentialSearch(client, params, desiredPage) {
-  console.log(`Starting exponential search with params ${JSON.stringify(params)}...`)
   return exponentialSearchInternal(client, params, desiredPage, desiredPage * 2, null);
 }
 
 async function exponentialSearchInternal(client, params, remaining, limit, lastKey) {
 
-  // keep this log line here until we're sure it works right
-  console.log(`Internal exponential search called with limit ${limit}`)
   params['Limit'] = limit;
 
   if (lastKey) {

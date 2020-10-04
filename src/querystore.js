@@ -10,7 +10,7 @@ function getQueryParams() {
   let hash = window.location.hash;
 
   if (hash == "") {
-    console.error("Why is there no hash? The app doesn't work without a hash");
+    // Generally nothing works without a hash! What are users doing?
     return new URLSearchParams();
   }
 
