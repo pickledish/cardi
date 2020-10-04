@@ -72,16 +72,24 @@
 <div class="flex justify-between items-center w-auto h-16 mt-2">
   <h1 class="mx-2 text-3xl">{$currBoard == "" ? "ALL" : $boardMap.get($currBoard) && $boardMap.get($currBoard).name} Notes</h1>
   {#if $tiles_checked.size == 0}
-    <div class="flex items-center px-4 py-2 rounded shadow bg-tealish cursor-pointer" on:click={() => $show_new_snippet_modal = true}>
+    <div class="flex items-center pl-3 pr-2 py-2 rounded shadow bg-tealish cursor-pointer" on:click={() => $show_new_snippet_modal = true}>
       <Icon kind="plus" width={3.0}/>
-      <span class="ml-2 font-bold">New Snippet</span>
+      <span class="mx-2 font-bold">New Snippet</span>
     </div>
   {:else}
     <span>
-      <button class="mx-2 p-2 rounded border border-gray-200 bg-gray-400" on:click={() => showModal("ADD")}>AddTag</button>
-      <button class="mx-2 p-2 rounded border border-gray-200 bg-gray-400" on:click={() => showModal("DELETE")}>RemTag</button>
-      <button class="mx-2 p-2 rounded border border-gray-200 bg-gray-400" on:click={handleBatchArchive}>Archive</button>
-      <button class="mx-2 p-2 rounded border border-gray-200 bg-gray-400">Delete</button>
+      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={() => showModal("ADD")}>
+        <Icon kind="square-plus"/>
+      </button>
+      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={() => showModal("DELETE")}>
+        <Icon kind="square-minus"/>
+      </button>
+      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={handleBatchArchive}>
+        <Icon kind="archive"/>
+      </button>
+      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer">
+        <Icon kind="trash"/>
+      </button>
     </span>
   {/if}
 </div>

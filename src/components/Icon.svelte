@@ -75,6 +75,22 @@
     <path stroke="none" d="M0 0h24v24H0z"/>
     <polyline points="7 7 12 12 7 17" />
     <polyline points="13 7 18 12 13 17" />
+  {:else if kind == "trash"}
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <line x1="4" y1="7" x2="20" y2="7" />
+    <line x1="10" y1="11" x2="10" y2="17" />
+    <line x1="14" y1="11" x2="14" y2="17" />
+    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+  {:else if kind == "square-plus"}
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <rect x="4" y="4" width="16" height="16" rx="2" />
+    <line x1="9" y1="12" x2="15" y2="12" />
+    <line x1="12" y1="9" x2="12" y2="15" />
+  {:else if kind == "square-minus"}
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <rect x="4" y="4" width="16" height="16" rx="2" />
+    <line x1="9" y1="12" x2="15" y2="12" />
   {:else}
     {console.log(`Unknown icon: ${kind}`)}
   {/if}
