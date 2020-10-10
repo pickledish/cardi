@@ -1,0 +1,23 @@
+{
+    "cardi-meta": {
+        "updated": 12345,
+        "schema": "string",
+    },
+    "cardi-notes" : {
+        "status"   : "string", // partition key
+        "created"  : 12345,    // sort key
+        "updated"  : 12345,
+        "title"    : "string",
+        "content"  : "string",
+        "boards"   : [12345],
+        "search"   : ["string"],
+        "kind"     : "string",
+        "image"    : "string"
+    },
+    "cardi-boards" : {
+        "created": 12345,  // partition key
+        "name": "string",
+        "current": 12345,
+        "archived": 12345,
+    },
+}
