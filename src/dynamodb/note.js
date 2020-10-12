@@ -106,7 +106,7 @@ function getManyOperation(status, afterMs, board, search, ascending) {
   }
 }
 
-function createSnippetOp(client, status, created, title, content, boards, search) {
+function createSnippetOp(client, status, created, title, content, boards, search, image) {
 
   let epoch = dayjs().valueOf();
 
@@ -117,6 +117,7 @@ function createSnippetOp(client, status, created, title, content, boards, search
     "title"    : title,
     "content"  : content,
     "kind"     : "note",
+    "image"    : image,
   }
 
   if (boards && boards.length > 0) {
@@ -200,11 +201,11 @@ export async function getSnippet(client, status, created) {
   }
 }
 
-export async function createSnippet(client, status, created, title, content, boards, search) {
+export async function createSnippet(client, status, created, title, content, boards, search, image) {
 
   // One operation to create the new snippet in the cardi-notes table
   let createOperation = [
-    createSnippetOp(client, status, created, title, content, boards, search)
+    createSnippetOp(client, status, created, title, content, boards, search, image)
   ];
 
   // One operation PER BOARD to the cardi-boards table to update counts
@@ -285,7 +286,7 @@ export async function changeStatus(client, oldStatus, created, newStatus) {
 
   // One operation to create the new snippet in the cardi-notes table
   let createOp = [
-    createSnippetOp(client, newStatus, created, o.title, o.content, o.boards.values, o.search.values)
+    createSnippetOp(client, newStatus, created, o.title, o.content, o.boards.values, o.search.values, o.image)
   ];
 
   // One operation PER BOARD to the cardi-boards table to decrease old status

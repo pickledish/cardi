@@ -14,6 +14,7 @@
   export let boards = [];
   export let search = [];
   export let kind = "NOTE"
+  export let image = "";
 
   $: created_date = dayjs(created).format('MMM D, YYYY');
 
@@ -28,6 +29,9 @@
 
 <div class="rounded shadow border border-gray-100 {bgcolor} break-words p-5">
   <div class="flex flex-col -my-2">
+    {#if image}
+    <img class="object-contain w-full" src="{image}"/>
+    {:else}
     <div class="flex justify-between">
       <div class="pt-2 py-1 text-xs">
         <Checkbox object_id={created} object_store={tiles_checked} bind:checked={is_checked}/>
@@ -36,6 +40,7 @@
         {created_date}
       </div>
     </div>
+    {/if}
     <div class="py-2">
       <span class="text-lg" on:click={() => $shownNote = created}>
         {#if title !== null}{title}{:else}{content}{/if}

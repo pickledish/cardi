@@ -8,7 +8,7 @@
   import { documentClient } from '../dynamodb/client.js'
   import { createSnippet } from '../dynamodb/note.js'
   import { toSearchKeys } from '../search.js'
-  import { getTitle } from '../pipeline.js'
+  import { getMetadata } from '../pipeline.js'
   import { isUrl } from '../util.js'
 
   let title_str = "";
@@ -20,20 +20,23 @@
     try {
       let boards = selected ? selected.map(elem => elem.value) : [];
 
-      let title = "";
+      let title = null;
       let search = [];
+      let image = null;
 
+      // always give a specified title priority over content
       if (title_str.length > 0) {
-        // always give a user title priority first
         title = title_str;
         search = toSearchKeys(title + " " + content);
+      // no title but content is a URL, so get some extra metadata
       } else if (isUrl(content)) {
-        console.log("Determined this is a URL, fetching title...");
-        title = await getTitle(content);
-        search = toSearchKeys(title);
+        let struct = await getMetadata(content);
+        title = struct["title"];
+        search = toSearchKeys(struct["title"]);
+        image = struct["image"]
+        console.log(`METADATA: ${title}, ${search}, ${image}`)
+      // not a URL and no title, so search is just content
       } else {
-        // important to set title to null, rather than empty string
-        title = null;
         search = toSearchKeys(content);
       }
 
@@ -41,7 +44,7 @@
       let secretKey = Cookie.get('awsSecretKey');
       let client = documentClient(accessKey, secretKey);
 
-      let response = await createSnippet(client, "current", null, title, content, boards, search);
+      let response = await createSnippet(client, "current", null, title, content, boards, search, image);
 
       window.location.reload();
     } catch (err) {
