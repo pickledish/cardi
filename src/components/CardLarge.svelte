@@ -26,7 +26,7 @@
   <div class="py-6">
     {@html marked(fullNote.content)}
   </div>
-  {#if fullNote.boards.length !== 0}
+  {#if fullNote.boards && fullNote.boards.length !== 0}
   <div>
     {#each Array.from(fullNote.boards.values) as id}
     <span

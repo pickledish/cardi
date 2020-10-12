@@ -80,7 +80,11 @@ function getManyOperation(status, afterMs, board, search, ascending) {
     ":status": status,
     ":afterMs": afterMs,
   }
-  if (board) {
+  if (board == "none") {
+    other_filters.push('attribute_not_exists (#boards)');
+    expressionAttributeNames["#boards"] = "boards";
+  }
+  else if (board) {
     other_filters.push('contains (#boards, :board)');
     expressionAttributeNames["#boards"] = "boards";
     expressionAttributeValues[":board"] = board;
@@ -106,27 +110,27 @@ function createSnippetOp(client, status, created, title, content, boards, search
 
   let epoch = dayjs().valueOf();
 
-  if (!boards || boards.length == 0) {
-    boards = [0];
+  let item = {
+    "status"   : status,
+    "created"  : created ? created : epoch,
+    "updated"  : epoch,
+    "title"    : title,
+    "content"  : content,
+    "kind"     : "note",
   }
 
-  if (!search || search.length == 0) {
-    search = [""];
+  if (boards && boards.length > 0) {
+    item["boards"] = client.createSet(boards);
+  }
+
+  if (search && search.length > 0) {
+    item["search"] = client.createSet(search);
   }
 
   return {
     "Put": {
       'TableName': 'cardi-notes',
-      'Item': {
-        "status"   : status,
-        "created"  : created ? created : epoch,
-        "updated"  : epoch,
-        "title"    : title,
-        "content"  : content,
-        "boards"   : client.createSet(boards),
-        "search"   : client.createSet(search),
-        "kind"     : "note",
-      }
+      'Item': item,
     }
   }
 }
@@ -143,6 +147,7 @@ function deleteSnippetOp(status, created) {
   }
 }
 
+// TODO make this update updated time!
 function updateBoardOp(client, status, created, action, ids) {
   return {
     "Update": {
@@ -230,6 +235,11 @@ export async function deleteSnippet(client, created) {
 
   let note = get(noteMap).get(created);
 
+  // Make life a little easier for the function if the note has no boards
+  if (note.boards == undefined) {
+    note.boards = {"values": []};
+  }
+
   // One operation to delete the old snippet in the cardi-notes table
   let deleteOperation = [
     deleteSnippetOp(note.status, created)
@@ -262,6 +272,11 @@ export async function deleteSnippet(client, created) {
 export async function changeStatus(client, oldStatus, created, newStatus) {
 
   let o = get(noteMap).get(created);
+
+  // Make life a little easier for the function if the note has no boards
+  if (o.boards == undefined) {
+    o.boards = {"values": []};
+  }
 
   // One operation to delete the old snippet in the cardi-notes table
   let deleteOp = [

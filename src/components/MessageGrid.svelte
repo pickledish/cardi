@@ -85,7 +85,15 @@
 <ChangeTagModal bind:show_modal={show_tag_modal} action={modal_action}/>
 
 <div class="flex justify-between items-center w-auto h-16 mt-2">
-  <h1 class="mx-2 text-3xl">{$currBoard == "" ? "ALL" : $boardMap.get($currBoard) && $boardMap.get($currBoard).name} Notes</h1>
+  <h1 class="mx-2 text-3xl">
+    {#if $currBoard == ""}
+      All Notes
+    {:else if $currBoard == "none"}
+      Untagged Notes
+    {:else}
+      {$boardMap.get($currBoard) && $boardMap.get($currBoard).name} Notes
+    {/if}
+  </h1>
   {#if $tiles_checked.size == 0}
     <div class="flex items-center pl-3 pr-2 py-2 rounded shadow bg-tealish cursor-pointer" on:click={() => $show_new_snippet_modal = true}>
       <Icon kind="plus" width={3.0}/>
