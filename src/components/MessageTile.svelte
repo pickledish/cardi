@@ -28,26 +28,26 @@
 </style>
 
 <div class="rounded shadow border border-gray-100 {bgcolor} break-words p-5">
-  <div class="flex flex-col -my-2">
+  <div class="flex flex-col">
     {#if image}
     <img class="object-contain w-full" src="{image}"/>
     {:else}
     <div class="flex justify-between">
-      <div class="pt-2 py-1 text-xs">
+      <div class="text-xs">
         <Checkbox object_id={created} object_store={tiles_checked} bind:checked={is_checked}/>
       </div>
-      <div class="pt-2 py-1 text-xs">
+      <div class="text-xs">
         {created_date}
       </div>
     </div>
     {/if}
-    <div class="py-2">
+    <div class="pt-4">
       <span class="text-lg" on:click={() => $shownNote = created}>
-        {#if title !== null}{title}{:else}{content}{/if}
+        {#if title !== null}{@html title}{:else}{content}{/if}
       </span>
     </div>
     {#if boards && boards.length !== 0}
-    <div class="py-2">
+    <div class="pt-3">
       {#each Array.from(boards.values) as id}
       <span
         class="inline-block rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 mr-2 cursor-pointer"

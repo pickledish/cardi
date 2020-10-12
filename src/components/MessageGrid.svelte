@@ -2,6 +2,7 @@
 
   import Cookie from 'js-cookie'
   import Masonry from 'masonry-layout';
+  import imagesLoaded from 'imagesloaded';
 
   import { onMount, afterUpdate } from 'svelte';
 
@@ -24,17 +25,21 @@
   afterUpdate(updateMasonry);
 
   function setupMasonry() {
-    masonry = new Masonry(document.querySelector('.masonry-grid'), {
-      itemSelector: '.masonry-tile',
-      columnWidth: '.masonry-width',
-      percentPosition: true
+    imagesLoaded(document.querySelectorAll('img'), function(instance) {
+      masonry = new Masonry(document.querySelector('.masonry-grid'), {
+        itemSelector: '.masonry-tile',
+        columnWidth: '.masonry-width',
+        percentPosition: true
+      });
     });
   }
 
   function updateMasonry() {
     if ($noteList.length > 0) {
-      masonry.reloadItems();
-      masonry.layout();
+      imagesLoaded(document.querySelectorAll('img'), function(instance) {
+        masonry.reloadItems();
+        masonry.layout();
+      });
     }
   }
 

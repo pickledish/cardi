@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "dayjs": "^1.8.32",
+    "imagesloaded": "^4.1.4",
     "js-cookie": "^2.2.1",
     "marked": "^1.1.1",
     "masonry-layout": "^4.2.2",
