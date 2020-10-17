@@ -45,7 +45,7 @@ This project is mainly a single-page application, taking advantage of the fantas
 
 To create a release-ready bundle for your own deployment of Cardi, run `npm run build`, which will compile all Svelte components to javascript, then render the JS bundle into `public/build`.
 
-Actual releases to [cardinotes.app](https://www.cardinotes.app) are handled via a [Github action](./.github/workflows/workflow.yaml), triggering whenever a commit to `master` is tagged, which builds the site and publishes the artifact to [Netlify](https://www.netlify.com), which hosts the static site and handles SSL certs.
+Actual releases to [cardinotes.app](https://www.cardinotes.app) are handled via a [Github action](./.github/workflows/deploy.yaml), triggering whenever a commit to `master` is tagged, which builds the site and publishes the artifact to [Netlify](https://www.netlify.com), which hosts the static site and handles SSL certs.
 
 ## Contributing
 

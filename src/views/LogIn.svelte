@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="flex items-end justify-end mb-8">
-        <button class="shadow bg-red-700 hover:bg-red-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" on:click={setup}>
+        <button class="shadow bg-red-700 hover:bg-red-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" id="submit" type="button" on:click={setup}>
         	<Icon kind="right"/>
         </button>
       </div>

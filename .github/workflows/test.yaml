@@ -1,0 +1,36 @@
+name: Build and Test
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout master
+      uses: actions/checkout@v2
+    - name: Set up Node.js version 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Set up playwright for tests
+      uses: microsoft/playwright-github-action@v1
+    - name: Install necessary npm dependencies
+      run: npm install
+    - name: Run the build script for site
+      run: npm run build
+    - name: Publish the built non-production site
+      uses: netlify/actions/cli@master
+      id: publish
+      with:
+        args: deploy --dir public
+      env:
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+    - name: Run headless tests on the draft site
+      run: npm test
+      env:
+        DRAFT_URL: ${{ steps.publish.outputs.NETLIFY_URL }}
+        AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
