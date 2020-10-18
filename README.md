@@ -1,5 +1,8 @@
 # Cardi Notes
 
+![Build and Test](https://github.com/pickledish/cardi/workflows/Build%20and%20Test/badge.svg)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f3116a5c-0e08-4ac5-879b-914559877b01/deploy-status)](https://app.netlify.com/sites/sad-yonath-ed271d/deploys)
+
 Cardi is a new kind of note keeping tool -- with all data privately stored in your own AWS account, accessible on any device without maintaining your own server, completely open-source and free to use.
 
 ![Cardi](./screenshot.png)
