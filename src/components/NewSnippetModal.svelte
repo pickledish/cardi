@@ -60,20 +60,22 @@
 
     <h1 class="mb-2 text-3xl">New Snippet</h1>
 
-    <input class="my-2 p-2 rounded border" placeholder="Title (optional)" bind:value={title_str}/>
+    <input id="title" class="my-2 p-2 rounded border" placeholder="Title (optional)" bind:value={title_str}/>
 
-    <textarea class="my-2 p-2 rounded border" placeholder="Snippet" bind:value={content}></textarea>
+    <textarea id="content" class="my-2 p-2 rounded border" placeholder="Snippet" bind:value={content}></textarea>
 
     <TagSelect bind:items={selected}/>
 
     <div class="mt-2">
       <span class="float-right">
         <button
+          id="cancel"
           on:click="{() => $show_new_snippet_modal = false}"
           class="bg-gray-500 hover:bg-gray-600 text-white py-1 px-3 rounded">
           Cancel
         </button>
         <button
+          id="submit"
           on:click="{submit}"
           class="bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded">
           Submit

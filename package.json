@@ -5,7 +5,7 @@
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public",
-    "test": "node --unhandled-rejections=strict test/login.js"
+    "test": "node --unhandled-rejections=strict test/integration.js"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^2.2.0",

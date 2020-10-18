@@ -102,20 +102,20 @@
   {#if $tiles_checked.size == 0}
     <div class="flex items-center pl-3 pr-2 py-2 rounded shadow bg-tealish cursor-pointer" on:click={() => $show_new_snippet_modal = true}>
       <Icon kind="plus" width={3.0}/>
-      <span class="mx-2 font-bold">New Snippet</span>
+      <button id="create" class="mx-2 font-bold">New Snippet</button>
     </div>
   {:else}
     <span>
-      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={() => showModal("ADD")}>
+      <button id="addBoard" class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={() => showModal("ADD")}>
         <Icon kind="square-plus"/>
       </button>
-      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={() => showModal("DELETE")}>
+      <button id="remBoard" class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={() => showModal("DELETE")}>
         <Icon kind="square-minus"/>
       </button>
-      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={handleBatchArchive}>
+      <button id="archive" class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={handleBatchArchive}>
         <Icon kind="archive"/>
       </button>
-      <button class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={handleBatchDelete}>
+      <button id="delete" class="mx-1 p-2 rounded shadow bg-tealish cursor-pointer" on:click={handleBatchDelete}>
         <Icon kind="trash"/>
       </button>
     </span>
