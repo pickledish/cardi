@@ -52,3 +52,7 @@ Actual releases to [cardinotes.app](https://www.cardinotes.app) are handled via 
 I'm happy to accept any new features or bug fixes to this repository, as long as they don't change the core functionality or requirements of Cardi (whole application is deployed as a static bundle, all application data is stored decentralized in a user's personal cloud account).
 
 In order to contribute, the process should be much the same as for other Github repositories -- fork this repo, make your changes, push, then create a PR against this repo from your fork. I'm still actively working on this project, so I'll be sure to keep an eye on the PRs and get back to you soon!
+
+## License
+
+All code in this repository, unless otherwise stated, is open-source under the [GNU GPLv3 license](./LICENSE.md).
