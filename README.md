@@ -55,4 +55,4 @@ In order to contribute, the process should be much the same as for other Github 
 
 ## License
 
-All code in this repository, unless otherwise stated, is open-source under the [GNU GPLv3 license](./LICENSE.md).
+All code in this repository, unless otherwise stated, is open source under the [GNU GPLv3 license](./LICENSE).
