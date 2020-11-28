@@ -1,7 +1,6 @@
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-  },
+  purge: [],
+  darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
       'display': ['Courier', 'sans-serif'],
@@ -32,6 +31,8 @@ module.exports = {
       },
     }
   },
-  variants: {},
-  plugins: []
+  variants: {
+    extend: {},
+  },
+  plugins: [],
 }

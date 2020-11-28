@@ -66,3 +66,7 @@ button:focus {
 		max-width: 1200px;
 	}
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

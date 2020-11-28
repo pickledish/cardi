@@ -4,8 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
-import sveltePreprocess from 'svelte-preprocess';
-
+import postcss from 'rollup-plugin-postcss';
 import dayjs from 'dayjs';
 
 const production = !process.env.ROLLUP_WATCH;
@@ -16,7 +15,7 @@ export default {
     sourcemap: true,
     format: 'iife',
     name: 'app',
-    file: 'public/build/bundle.js',
+    file: 'public/build/bundle.js'
   },
   plugins: [
 
@@ -26,15 +25,16 @@ export default {
       "BUILD_DATE_PLACEHOLDER": () => dayjs().format('MMM D, YYYY')
     }),
 
+    postcss({ extract: false, use: ['sass'] }),
+
     svelte({
-      preprocess: sveltePreprocess({ postcss: true }),
       // enable run-time checks when not in production
       dev: !production,
       // we'll extract any component CSS out into
       // a separate file - better for performance
-      css: (css) => {
+      css: css => {
         css.write('public/build/bundle.css');
-      },
+      }
     }),
 
     // If you have external dependencies installed from
@@ -44,9 +44,8 @@ export default {
     // https://github.com/rollup/plugins/tree/master/packages/commonjs
     resolve({
       browser: true,
-      dedupe: ['svelte'],
+      dedupe: ['svelte']
     }),
-
     commonjs(),
 
     // In dev mode, call `npm run start` once
@@ -59,26 +58,30 @@ export default {
 
     // If we're building for production (npm run build
     // instead of npm run dev), minify
-    production && terser(),
+    production && terser()
   ],
   watch: {
-    clearScreen: false,
-  },
+    clearScreen: false
+  }
 };
 
 function serve() {
-  let started = false;
+  let server;
+
+  function toExit() {
+    if (server) server.kill(0);
+  }
 
   return {
     writeBundle() {
-      if (!started) {
-        started = true;
+      if (server) return;
+      server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+        stdio: ['ignore', 'inherit', 'inherit'],
+        shell: true
+      });
 
-        require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
-          stdio: ['ignore', 'inherit', 'inherit'],
-          shell: true,
-        });
-      }
-    },
+      process.on('SIGTERM', toExit);
+      process.on('exit', toExit);
+    }
   };
 }

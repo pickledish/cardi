@@ -1,5 +1,4 @@
 <script>
-  import Tailwind from "./Tailwind.svelte";
 	import Router from 'svelte-spa-router'
 	import Overview from './views/Overview.svelte'
 	import LogIn from './views/LogIn.svelte'
@@ -17,5 +16,4 @@
 
 </style>
 
-<Tailwind/>
 <Router {routes}/>
