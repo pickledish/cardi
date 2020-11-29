@@ -19,7 +19,9 @@
   $: created_date = dayjs(created).format('MMM D, YYYY');
 
   let is_checked = false;
-  $: colors = (is_checked) ? "bg-red-200" : "bg-white border-grey-100 dark:bg-grey-700 dark:border-grey-900"
+  $: colors = (is_checked)
+    ? "bg-red-200 border-red-400 dark:bg-red-700 dark:border-red-900"
+    : "bg-white border-grey-100 dark:bg-grey-700 dark:border-grey-900";
 
 </script>
 
@@ -29,9 +31,6 @@
 
 <div class="rounded shadow border {colors} break-words p-5">
   <div class="flex flex-col">
-    {#if image}
-    <img class="object-contain w-full" src="{image}"/>
-    {:else}
     <div class="flex justify-between">
       <div class="text-xs">
         <Checkbox object_id={created} object_store={tiles_checked} bind:checked={is_checked}/>
@@ -40,6 +39,8 @@
         {created_date}
       </div>
     </div>
+    {#if image}
+    <img class="object-contain w-full pt-4" src="{image}"/>
     {/if}
     <div class="pt-4">
       <span class="text-lg" on:click={() => $shownNote = created}>
@@ -50,7 +51,7 @@
     <div class="pt-3">
       {#each Array.from(boards.values) as id}
       <span
-        class="inline-block rounded bg-gray-200 px-2 py-1 text-xs text-gray-700 mr-2 cursor-pointer"
+        class="inline-block rounded bg-grey-300 dark:bg-grey-500 px-2 py-1 text-xs mr-2 cursor-pointer"
         on:click={() => $currBoard = id}
       >
         {$boardMap.get(id) && $boardMap.get(id).name}

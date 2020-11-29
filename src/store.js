@@ -17,7 +17,7 @@ export const currAfterMs   = queryStore("after", 0);
 export const currBoard     = queryStore("board", "");
 export const currSearch    = queryStore("search", "");
 export const currAscending = queryStore("asc", false);
-export const currPageSize  = queryStore("page", 20);
+export const currPageSize  = queryStore("page", 18);
 
 // ----------------------------------------------------------------------------
 // The parameter struct, updated reactively based on any individual store
