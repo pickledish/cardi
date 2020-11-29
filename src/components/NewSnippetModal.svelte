@@ -58,11 +58,11 @@
 <Modal bind:show={$show_new_snippet_modal}>
   <div class="flex flex-col items-stretch text-grey-700">
 
-    <h1 class="mb-2 text-3xl">New Snippet</h1>
+    <h1 class="mb-2 text-3xl dark:text-grey-100">New Snippet</h1>
 
-    <input id="title" class="my-2 p-2 rounded border" placeholder="Title (optional)" bind:value={title_str}/>
+    <input id="title" class="p-2 rounded border" placeholder="Title (optional)" bind:value={title_str}/>
 
-    <textarea id="content" class="my-2 p-2 rounded border" placeholder="Snippet" bind:value={content}></textarea>
+    <textarea id="content" class="p-2 my-2 rounded border" placeholder="Snippet" bind:value={content}></textarea>
 
     <TagSelect bind:items={selected}/>
 
@@ -77,7 +77,7 @@
         <button
           id="submit"
           on:click="{submit}"
-          class="bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded">
+          class="bg-teal-300 dark:bg-teal-700 text-white py-1 px-3 rounded">
           Submit
         </button>
       </span>

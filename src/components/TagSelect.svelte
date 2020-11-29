@@ -27,8 +27,9 @@
 <style>
 
 .picker {
-  --borderRadius: 0px;
+  --borderRadius: 4px;
   --selectedItemPadding: 0px 0px 0px 0px;
+  --inputFontSize: 100%;
   --itemPadding: 0px 16px 0px 16px;
   --height: 36px;
   --multiItemBorderRadius: 2px;
@@ -39,12 +40,13 @@
   --multiClearHoverBG: rgba(0,0,0,0);
   --multiClearHoverFill: rgba(0,0,0,255);
   --multiItemPadding: 4px 8px;
-  --multiItemMargin: 0 4px;
+  --multiSelectPadding: 0 0.5rem 0 0.5rem;
+  --placeholderColor: rgba(145,153,166,255);
 }
 
 </style>
 
-<div class="picker">
+<div class="picker text-grey-700">
   <Select
     items={tags_for_select}
     isMulti={true}
