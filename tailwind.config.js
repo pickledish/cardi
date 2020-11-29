@@ -1,5 +1,9 @@
 module.exports = {
-  purge: [],
+  purge: {
+    // TODO this is needed since otherwise is purges svelte CSS classes
+    // but this is not good for prod bundle size!
+    enabled: false,
+  },
   darkMode: "media", // false or 'media' or 'class'
   theme: {
     fontFamily: {
