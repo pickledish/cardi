@@ -76,7 +76,7 @@
 	<p>ALL BOARDS</p>
 </div>
 
-<div class="flex items-center p-2 ml-4 text-md rounded cursor-pointer bg-desk hover:bg-desk-dark">
+<div class="flex items-center p-2 ml-4 text-md rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
 	<Icon kind="search"/>
 	<input class="px-2 w-32 rounded outline-none" style="background-color: inherit;" bind:value={prefix}>
 </div>
@@ -85,7 +85,7 @@
 <SidebarItem
   icon="box"
   text="{board.name}"
-  bgclass={$currBoard == board.created ? "bg-desk-dark" : ""}
+  bgclass={$currBoard == board.created ? "bg-desk-300 dark:bg-desk-700" : ""}
   action={() => $currBoard = board.created}
 >
   <span>{$currArchived ? board.archived : board.current}</span>

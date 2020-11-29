@@ -19,7 +19,7 @@
   $: created_date = dayjs(created).format('MMM D, YYYY');
 
   let is_checked = false;
-  $: bgcolor = (is_checked) ? "bg-red-200" : "bg-white"
+  $: colors = (is_checked) ? "bg-red-200" : "bg-white border-grey-100 dark:bg-grey-700 dark:border-grey-900"
 
 </script>
 
@@ -27,7 +27,7 @@
 
 </style>
 
-<div class="rounded shadow border border-gray-100 {bgcolor} break-words p-5">
+<div class="rounded shadow border {colors} break-words p-5">
   <div class="flex flex-col">
     {#if image}
     <img class="object-contain w-full" src="{image}"/>

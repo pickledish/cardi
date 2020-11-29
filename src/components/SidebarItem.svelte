@@ -13,7 +13,7 @@
 </script>
 
 <div on:click={action}>
-  <div class="p-2 ml-4 text-md rounded cursor-pointer {bgclass} hover:bg-desk-dark">
+  <div class="p-2 ml-4 text-md rounded cursor-pointer {bgclass} hover:bg-desk-300 dark:hover:bg-desk-700">
     <div class="flex justify-between items-center">
       <div class="flex justify-between items-center">
         <Icon kind={icon}/>
