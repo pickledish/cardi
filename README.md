@@ -37,6 +37,7 @@ In order to start using Cardi to keep notes, the process is short and simple:
 - Quick filters based on board or date of note creation
 - Support for batch archival and tag modification
 - Works in all major browsers, and phones as a Progressive Web App
+- Dark mode!
 
 ## Technical Features
 

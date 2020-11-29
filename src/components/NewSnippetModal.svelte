@@ -56,7 +56,7 @@
 
 
 <Modal bind:show={$show_new_snippet_modal}>
-  <div class="flex flex-col items-stretch">
+  <div class="flex flex-col items-stretch text-grey-700">
 
     <h1 class="mb-2 text-3xl">New Snippet</h1>
 
