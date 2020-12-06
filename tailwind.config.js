@@ -1,8 +1,13 @@
+const production = !process.env.ROLLUP_WATCH;
+
 module.exports = {
   purge: {
-    // TODO this is needed since otherwise is purges svelte CSS classes
-    // but this is not good for prod bundle size!
-    enabled: false,
+    content: [
+      "./src/**/*.svelte",
+      "./public/**/*.html"
+    ],
+    css: ["./public/**/*.css"],
+    enabled: production // disable purge in dev
   },
   darkMode: "media", // false or 'media' or 'class'
   theme: {
