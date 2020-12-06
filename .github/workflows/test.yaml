@@ -31,6 +31,7 @@ jobs:
     - name: Run headless tests on the draft site
       run: npm test
       env:
+        DEBUG: pw:api
         LOCAL_RUN: nope
         DRAFT_URL: ${{ steps.publish.outputs.NETLIFY_URL }}
         AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
