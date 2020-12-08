@@ -94,3 +94,6 @@ export const shownNote = writable(null);
 // map from timestamp -> name of new board we're about to create
 // necessary so we can remember the names of board IDs not persisted yet
 export const inProgressBoards = writable(new Map());
+
+// are we currently showing the sidebar? Used when mobile
+export const showSidebar = writable(false);

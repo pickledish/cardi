@@ -28,13 +28,9 @@
 {/if}
 <div class="container mx-auto h-auto">
   {#if creds}
-  <div class="flex mx-2">
-    <div class="w-1/5 min-w-14rem hidden md:block">
-      <div class="pt-4 pr-6"><Sidebar/></div>
-    </div>
-    <div class="w-full md:w-4/5">
-      <div class="p-2"><MessageGrid/></div>
-    </div>
+  <div class="flex">
+    <Sidebar/>
+    <MessageGrid/>
   </div>
   {:else}
   <LogIn/>

@@ -8,7 +8,7 @@
 
   import { documentClient } from '../dynamodb/client.js'
   import { getBoards } from '../dynamodb/board.js'
-  import { currArchived, currAscending, currAfterMs, currBoard, boardList, sortedBoardList } from '../store.js'
+  import { currArchived, currAscending, currAfterMs, currBoard, boardList, sortedBoardList, showSidebar } from '../store.js'
 
   import { onMount } from 'svelte';
 
@@ -28,66 +28,79 @@
 
 </script>
 
-<div class="p-2 text-xs text-light my-1 tracking-widest">
-	<p>QUICK VIEWS</p>
-</div>
+<style>
+  aside {
+    transition: left 0.3s ease-in-out;
+  }
+  .open {
+    left: 0;
+  }
+</style>
 
-<SidebarItem
-  icon="home"
-  text="Overview"
-  action={() => window.location = "/"}
-/>
+<aside class="w-full md:w-1/5 min-w-14rem absolute -left-full md:left-0 md:relative z-10 bg-desk-100 dark:bg-desk-900 {$showSidebar ? "open" : ""} pt-4 px-4">
 
-<SidebarItem
-  icon="sad"
-  text="Untagged"
-  action={() => $currBoard = "none"}
-/>
+  <div class="p-2 text-xs text-light my-1 tracking-widest">
+  	<p>QUICK VIEWS</p>
+  </div>
 
-<SidebarItem
-  icon="calendar"
-  text="This Month"
-  action={() => $currAfterMs = dayjs().startOf('month').unix() * 1000}
-/>
+  <SidebarItem
+    icon="home"
+    text="Overview"
+    action={() => window.location = "/"}
+  />
 
-<SidebarItem
-  icon="history"
-  text="From Today"
-  action={() => $currAfterMs = dayjs().startOf('day').unix() * 1000}
-/>
+  <SidebarItem
+    icon="sad"
+    text="Untagged"
+    action={() => $currBoard = "none"}
+  />
 
-<SidebarItem
-  icon="archive"
-  text="Archived"
-  action={() => toggleStore(currArchived)}
->
-  <Checkbox bind:checked={$currArchived} on:click/>
-</SidebarItem>
+  <SidebarItem
+    icon="calendar"
+    text="This Month"
+    action={() => $currAfterMs = dayjs().startOf('month').unix() * 1000}
+  />
 
-<SidebarItem
-  icon="sort"
-  text="Ascending"
-  action={() => toggleStore(currAscending)}
->
-  <Checkbox bind:checked={$currAscending} on:click/>
-</SidebarItem>
+  <SidebarItem
+    icon="history"
+    text="From Today"
+    action={() => $currAfterMs = dayjs().startOf('day').unix() * 1000}
+  />
 
-<div class="p-2 text-xs text-light my-1 tracking-widest">
-	<p>ALL BOARDS</p>
-</div>
+  <SidebarItem
+    icon="archive"
+    text="Archived"
+    action={() => toggleStore(currArchived)}
+  >
+    <Checkbox bind:checked={$currArchived} on:click/>
+  </SidebarItem>
 
-<div class="flex items-center p-2 ml-4 text-md rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
-	<Icon kind="search"/>
-	<input class="px-2 w-32 rounded outline-none" style="background-color: inherit;" bind:value={prefix}>
-</div>
+  <SidebarItem
+    icon="sort"
+    text="Ascending"
+    action={() => toggleStore(currAscending)}
+  >
+    <Checkbox bind:checked={$currAscending} on:click/>
+  </SidebarItem>
 
-{#each shownBoards as board}
-<SidebarItem
-  icon="box"
-  text="{board.name}"
-  bgclass={$currBoard == board.created ? "bg-desk-300 dark:bg-desk-700" : ""}
-  action={() => $currBoard = board.created}
->
-  <span>{$currArchived ? board.archived : board.current}</span>
-</SidebarItem>
-{/each}
+  <div class="p-2 text-xs text-light my-1 tracking-widest">
+  	<p>ALL BOARDS</p>
+  </div>
+
+  <div class="flex items-center p-2 ml-4 text-md rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
+  	<Icon kind="search"/>
+  	<input class="px-2 w-32 rounded outline-none" style="background-color: inherit;" bind:value={prefix}>
+  </div>
+
+  {#each shownBoards as board}
+  <SidebarItem
+    icon="box"
+    text="{board.name}"
+    bgclass={$currBoard == board.created ? "bg-desk-300 dark:bg-desk-700" : ""}
+    action={() => $currBoard = board.created}
+  >
+    <span>{$currArchived ? board.archived : board.current}</span>
+  </SidebarItem>
+  {/each}
+
+</aside>

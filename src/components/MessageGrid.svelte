@@ -89,49 +89,51 @@
 <ModalCardLarge/>
 <ChangeTagModal bind:show_modal={show_tag_modal} action={modal_action}/>
 
-<div class="flex justify-between items-center w-auto h-16 mt-2">
-  <h1 class="mx-2 text-3xl">
-    {#if $currBoard == ""}
-      All Notes
-    {:else if $currBoard == "none"}
-      Untagged Notes
-    {:else}
-      {$boardMap.get($currBoard) && $boardMap.get($currBoard).name} Notes
-    {/if}
-  </h1>
-  {#if $tiles_checked.size == 0}
-    <div class="flex items-center pl-3 pr-2 py-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={() => $show_new_snippet_modal = true}>
-      <Icon kind="plus" width={3.0}/>
-      <button id="create" class="mx-2 font-bold">New Snippet</button>
-    </div>
-  {:else}
-    <span>
-      <button id="addBoard" class="mx-1 p-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={() => showModal("ADD")}>
-        <Icon kind="square-plus"/>
-      </button>
-      <button id="remBoard" class="mx-1 p-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={() => showModal("DELETE")}>
-        <Icon kind="square-minus"/>
-      </button>
-      <button id="archive" class="mx-1 p-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={handleBatchArchive}>
-        <Icon kind="archive"/>
-      </button>
-      <button id="delete" class="mx-1 p-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={handleBatchDelete}>
-        <Icon kind="trash"/>
-      </button>
-    </span>
-  {/if}
-</div>
-
-<div class="">
-  <div class="masonry-grid flex flex-wrap mb-4 -mx-3">
-    {#each $noteList as message}
-      <div class="masonry-tile masonry-width w-full md:w-1/2 lg:w-1/3">
-        <div class="m-3">
-          <MessageTile {...message}/>
-        </div>
+<div class="w-full md:w-4/5 mx-2 p-2">
+  <div class="flex justify-between items-center w-auto h-16 mt-2">
+    <h1 class="mx-2 text-3xl">
+      {#if $currBoard == ""}
+        All Notes
+      {:else if $currBoard == "none"}
+        Untagged Notes
+      {:else}
+        {$boardMap.get($currBoard) && $boardMap.get($currBoard).name} Notes
+      {/if}
+    </h1>
+    {#if $tiles_checked.size == 0}
+      <div class="flex items-center pl-3 pr-2 py-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={() => $show_new_snippet_modal = true}>
+        <Icon kind="plus" width={3.0}/>
+        <button id="create" class="mx-2 font-bold">New Snippet</button>
       </div>
     {:else}
-      No messages found! Check console for errors
-    {/each}
+      <span>
+        <button id="addBoard" class="mx-1 p-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={() => showModal("ADD")}>
+          <Icon kind="square-plus"/>
+        </button>
+        <button id="remBoard" class="mx-1 p-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={() => showModal("DELETE")}>
+          <Icon kind="square-minus"/>
+        </button>
+        <button id="archive" class="mx-1 p-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={handleBatchArchive}>
+          <Icon kind="archive"/>
+        </button>
+        <button id="delete" class="mx-1 p-2 rounded shadow bg-teal-300 dark:bg-teal-700 cursor-pointer" on:click={handleBatchDelete}>
+          <Icon kind="trash"/>
+        </button>
+      </span>
+    {/if}
+  </div>
+
+  <div class="">
+    <div class="masonry-grid flex flex-wrap mb-4 -mx-3">
+      {#each $noteList as message}
+        <div class="masonry-tile masonry-width w-full md:w-1/2 lg:w-1/3">
+          <div class="m-3">
+            <MessageTile {...message}/>
+          </div>
+        </div>
+      {:else}
+        No messages found! Check console for errors
+      {/each}
+    </div>
   </div>
 </div>
