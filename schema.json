@@ -1,23 +1,32 @@
 {
-    "cardi-meta": {
-        "updated": 12345,
-        "schema": "string",
+    "cardi-meta" : {
+        "updated" : 12345,
+        "schema"  : "string",
     },
     "cardi-notes" : {
-        "status"   : "string", // partition key
-        "created"  : 12345,    // sort key
-        "updated"  : 12345,
-        "title"    : "string",
-        "content"  : "string",
-        "boards"   : [12345],
-        "search"   : ["string"],
-        "kind"     : "string",
-        "image"    : "string"
+        "status"  : "current | archived", // partition key
+        "created" : 1600000000,           // sort key
+        "updated" : 1600000001,
+        "title"   : "Sample Note",
+        "content" : "Notes can be plain text, markdown, URLs...",
+        "boards"  : [
+            1500000000,
+            1500000001,
+            // ...
+        ],
+        "search"  : [
+            "sampl",
+            "note",
+            "plain",
+            // ...
+        ],
+        "kind"    : "text | link | location",
+        "image"   : "https://www.google.com/static/logo.png",
     },
     "cardi-boards" : {
-        "created": 12345,  // partition key
-        "name": "string",
-        "current": 12345,
-        "archived": 12345,
+        "created"  : 1500000000, // partition key
+        "name"     : "test",
+        "current"  : 25,
+        "archived" : 15,
     },
 }
