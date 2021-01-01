@@ -12,7 +12,7 @@
 
   import { onMount } from 'svelte';
 
-  import { toggleStore } from '../util.js';
+  import { resetView } from '../util.js';
 
   // When we load the sidebar, async get all boards, then update the tag store
   onMount(async () => {
@@ -46,31 +46,31 @@
   <SidebarItem
     icon="home"
     text="Overview"
-    action={() => window.location = "/"}
+    action={() => (window.location = "/") && resetView()}
   />
 
   <SidebarItem
     icon="sad"
     text="Untagged"
-    action={() => $currBoard = "none"}
+    action={() => ($currBoard = "none") && resetView()}
   />
 
   <SidebarItem
     icon="calendar"
     text="This Month"
-    action={() => $currAfterMs = dayjs().startOf('month').unix() * 1000}
+    action={() => ($currAfterMs = dayjs().startOf('month').unix() * 1000) && resetView()}
   />
 
   <SidebarItem
     icon="history"
     text="From Today"
-    action={() => $currAfterMs = dayjs().startOf('day').unix() * 1000}
+    action={() => ($currAfterMs = dayjs().startOf('day').unix() * 1000) && resetView()}
   />
 
   <SidebarItem
     icon="archive"
     text="Archived"
-    action={() => toggleStore(currArchived)}
+    action={() => toggleStore(currArchived) && resetView()}
   >
     <Checkbox bind:checked={$currArchived} on:click/>
   </SidebarItem>
@@ -78,7 +78,7 @@
   <SidebarItem
     icon="sort"
     text="Ascending"
-    action={() => toggleStore(currAscending)}
+    action={() => toggleStore(currAscending) && resetView()}
   >
     <Checkbox bind:checked={$currAscending} on:click/>
   </SidebarItem>
@@ -97,7 +97,7 @@
     icon="box"
     text="{board.name}"
     bgclass={$currBoard == board.created ? "bg-desk-300 dark:bg-desk-700" : ""}
-    action={() => $currBoard = board.created}
+    action={() => ($currBoard = board.created) && resetView()}
   >
     <span>{$currArchived ? board.archived : board.current}</span>
   </SidebarItem>
