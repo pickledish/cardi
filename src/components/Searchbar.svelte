@@ -23,9 +23,9 @@
 
 </script>
 
-<div class="flex items-center rounded bg-peach-dark px-4 py-1-5">
+<div class="flex items-center rounded bg-desk-100 px-4 py-1-5">
   <input
-    class="mr-4 outline-none text-sm bg-peach-dark placeholder-gray-200 w-28 md:w-auto"
+    class="mr-4 outline-none text-sm bg-desk-100 w-28 md:w-auto"
     type="search"
     id="searchbar"
     placeholder="Search notes"

@@ -58,7 +58,7 @@
 <Modal bind:show={$show_new_snippet_modal}>
   <div class="flex flex-col items-stretch text-grey-700">
 
-    <h1 class="mb-2 text-3xl dark:text-grey-100">New Snippet</h1>
+    <h1 class="mb-4 text-3xl dark:text-grey-100">New Snippet</h1>
 
     <input id="title" class="p-2 rounded border" placeholder="Title (optional)" bind:value={title_str}/>
 
@@ -66,19 +66,19 @@
 
     <TagSelect bind:items={selected}/>
 
-    <div class="mt-2">
+    <div class="mt-4">
       <span class="float-right">
         <button
           id="cancel"
           on:click="{() => $show_new_snippet_modal = false}"
-          class="bg-gray-500 hover:bg-gray-600 text-white py-1 px-3 rounded">
+          class="hover:bg-desk-300 dark:text-white py-1 px-3 rounded">
           Cancel
         </button>
         <button
           id="submit"
           on:click="{submit}"
-          class="bg-teal-300 dark:bg-teal-700 text-white py-1 px-3 rounded">
-          Submit
+          class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded">
+          Create
         </button>
       </span>
     </div>

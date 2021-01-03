@@ -26,10 +26,10 @@
 </script>
 
 <label class="flex justify-start items-start text-grey-700">
-  <div class="bg-white border-2 rounded border-gray-400 w-5 h-5 flex flex-shrink-0 justify-center items-center">
+  <div class="bg-white border-2 rounded border-desk-300 w-5 h-5 flex flex-shrink-0 justify-center items-center">
     <input type="checkbox" class="opacity-0 absolute" bind:checked={checked} on:change={handle_check_change}>
-    <div class="{checked ? "block" : "hidden"} pointer-events-none">
-      <Icon kind="check" size={18} width={3.0}/>
+    <div class="{checked ? "block" : "hidden"} pointer-events-none text-sage-700">
+      <Icon kind="check" size={16} width={3.0}/>
     </div>
   </div>
   <div class="select-none">{label}</div>

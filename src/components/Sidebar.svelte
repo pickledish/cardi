@@ -12,7 +12,7 @@
 
   import { onMount } from 'svelte';
 
-  import { resetView } from '../util.js';
+  import { resetView, toggleStore } from '../util.js';
 
   // When we load the sidebar, async get all boards, then update the tag store
   onMount(async () => {
@@ -96,7 +96,7 @@
   <SidebarItem
     icon="box"
     text="{board.name}"
-    bgclass={$currBoard == board.created ? "bg-desk-300 dark:bg-desk-700" : ""}
+    selected={$currBoard == board.created}
     action={() => ($currBoard = board.created) && resetView()}
   >
     <span>{$currArchived ? board.archived : board.current}</span>
