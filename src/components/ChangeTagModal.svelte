@@ -35,22 +35,22 @@
 </script>
 
 <Modal bind:show={show_modal}>
-  <div class="flex flex-col items-stretch">
+  <div class="flex flex-col items-stretch text-grey-700">
 
-    <h1 class="mb-2 text-3xl">{action} Tags</h1>
+    <h1 class="mb-4 text-3xl dark:text-grey-100">{action} Tags</h1>
 
     <TagSelect bind:items={selected}/>
 
-    <div class="mt-2">
+    <div class="mt-4">
       <span class="float-right">
         <button
           on:click="{() => show_modal = false}"
-          class="bg-gray-500 hover:bg-gray-600 py-1 px-3 rounded">
+          class="hover:bg-desk-300 dark:text-white py-1 px-3 rounded">
           Cancel
         </button>
         <button
           on:click="{() => submit()}"
-          class="bg-green-500 hover:bg-green-700 py-1 px-3 rounded">
+          class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded">
           Submit
         </button>
       </span>

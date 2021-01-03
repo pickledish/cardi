@@ -13,8 +13,8 @@
 </script>
 
 <div on:click={action}>
-  <div class="p-2 ml-4 text-md rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
-    {#if selected}<div class="absolute bg-sage-700 left-7 rounded">&nbsp;</div>{/if}
+  <div class="relative p-2 ml-4 text-md rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
+    {#if selected}<div class="absolute -left-0.5 bg-sage-700 rounded">&nbsp;</div>{/if}
     <div class="flex justify-between items-center">
       <div class="flex justify-between items-center">
         <Icon kind={icon}/>

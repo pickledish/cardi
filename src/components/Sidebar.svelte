@@ -46,30 +46,35 @@
   <SidebarItem
     icon="home"
     text="Overview"
+    selected={$currBoard == "" && $currAfterMs == 0}
     action={() => (window.location = "/") && resetView()}
   />
 
   <SidebarItem
     icon="sad"
     text="Untagged"
+    selected={$currBoard == "none"}
     action={() => ($currBoard = "none") && resetView()}
   />
 
   <SidebarItem
     icon="calendar"
     text="This Month"
+    selected={$currAfterMs == dayjs().startOf('month').unix() * 1000}
     action={() => ($currAfterMs = dayjs().startOf('month').unix() * 1000) && resetView()}
   />
 
   <SidebarItem
     icon="history"
     text="From Today"
+    selected={$currAfterMs == dayjs().startOf('day').unix() * 1000}
     action={() => ($currAfterMs = dayjs().startOf('day').unix() * 1000) && resetView()}
   />
 
   <SidebarItem
     icon="archive"
     text="Archived"
+    selected={$currArchived}
     action={() => toggleStore(currArchived) && resetView()}
   >
     <Checkbox bind:checked={$currArchived} on:click/>
@@ -78,6 +83,7 @@
   <SidebarItem
     icon="sort"
     text="Ascending"
+    selected={$currAscending}
     action={() => toggleStore(currAscending) && resetView()}
   >
     <Checkbox bind:checked={$currAscending} on:click/>

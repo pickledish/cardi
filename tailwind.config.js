@@ -49,7 +49,6 @@ module.exports = {
         'primary': '',
         'secondary': '#444444',
         'light': '',
-        'tiffany': '#70dbc6',
       },
       minWidth: {
         '0': '0',
