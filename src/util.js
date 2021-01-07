@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 
-  import { showSidebar } from './store.js';
+import { showSidebar } from './store.js';
 
 export function listToMap(list, indexKey) {
   return new Map(list.map(i => [i[indexKey], i]));

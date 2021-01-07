@@ -20,8 +20,8 @@
 
   let is_checked = false;
   $: colors = (is_checked)
-    ? "bg-red-200 border-red-400 dark:bg-red-700 dark:border-red-900"
-    : "bg-white border-grey-100 dark:bg-grey-700 dark:border-grey-900";
+    ? "border-sage-700 dark:border-sage-300"
+    : "border-white dark:border-desk-700";
 
 </script>
 
@@ -29,7 +29,7 @@
 
 </style>
 
-<div class="rounded shadow border {colors} break-words p-5">
+<div class="rounded shadow bg-white dark:bg-desk-700 break-words py-5 pr-5 pl-3 border-l-0.5rem {colors}">
   <div class="flex flex-col">
     <div class="flex justify-between">
       <div class="text-xs">
