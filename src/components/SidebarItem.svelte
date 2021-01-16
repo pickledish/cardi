@@ -13,7 +13,7 @@
 </script>
 
 <div on:click={action}>
-  <div class="relative p-2 ml-4 rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
+  <div class="relative p-1.75 ml-4 rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
     {#if selected}<div class="absolute -left-0.5 bg-sage-700 dark:bg-sage-300 rounded">&nbsp;</div>{/if}
     <div class="flex justify-between items-center">
       <div class="flex justify-between items-center">

@@ -90,7 +90,7 @@
 <ChangeTagModal bind:show_modal={show_tag_modal} action={modal_action}/>
 
 <div class="w-full md:w-4/5 mx-2 p-2">
-  <div class="flex justify-between items-center w-auto h-16 mt-2">
+  <div class="flex justify-between items-center w-auto h-16 mt-1">
     <h1 class="mx-2 text-2xl">
       {#if $currBoard == ""}
         All Notes
@@ -127,7 +127,7 @@
     <div class="masonry-grid flex flex-wrap mb-4 -mx-3">
       {#each $noteList as message}
         <div class="masonry-tile masonry-width w-full md:w-1/2 lg:w-1/3">
-          <div class="m-3">
+          <div class="m-2.5">
             <MessageTile {...message}/>
           </div>
         </div>

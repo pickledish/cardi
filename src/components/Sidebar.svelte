@@ -39,7 +39,7 @@
 
 <aside class="w-full md:w-1/5 min-w-14rem absolute -left-full md:left-0 md:relative z-10 bg-desk-100 dark:bg-desk-900 {$showSidebar ? "open" : ""} pt-4 px-4">
 
-  <div class="p-2 text-xs text-light my-1 tracking-widest">
+  <div class="p-1.75 text-xs text-light my-1 tracking-widest">
   	<p>QUICK VIEWS</p>
   </div>
 
@@ -89,11 +89,11 @@
     <Checkbox bind:checked={$currAscending} on:click/>
   </SidebarItem>
 
-  <div class="p-2 text-xs text-light my-1 tracking-widest">
+  <div class="p-1.75 text-xs text-light my-1 tracking-widest">
   	<p>ALL BOARDS</p>
   </div>
 
-  <div class="flex items-center p-2 ml-4 rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
+  <div class="flex items-center p-1.75 ml-4 rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
   	<Icon kind="search"/>
   	<input class="px-2 w-32 rounded outline-none" style="background-color: inherit;" bind:value={prefix}>
   </div>
