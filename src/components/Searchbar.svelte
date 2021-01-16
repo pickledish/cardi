@@ -23,15 +23,15 @@
 
 </script>
 
-<div class="flex items-center rounded bg-desk-100 px-4 py-1-5">
+<div class="flex items-center rounded bg-desk-100 dark:bg-desk-900 px-4 py-1">
   <input
-    class="mr-4 outline-none text-sm bg-desk-100 w-28 md:w-auto"
+    class="mr-4 outline-none text-sm bg-desk-100 dark:bg-desk-900 w-28 md:w-auto"
     type="search"
     id="searchbar"
     placeholder="Search notes"
     on:keydown={handleKeyDown}
     >
   <button on:click={handleSearch}>
-    <Icon kind="search" size={20}/>
+    <Icon kind="search" size={18}/>
   </button>
 </div>

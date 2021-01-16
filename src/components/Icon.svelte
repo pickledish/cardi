@@ -1,7 +1,7 @@
 <script>
 
   export let kind = "missing";
-  export let size = 22;
+  export let size = 20;
   export let width = 2.5;
 
 </script>

@@ -29,7 +29,7 @@
 </script>
 
 <div class="h-full w-full flex flex-col justify-center items-center">
-	<div class="text-3xl mb-12 -mt-12">Welcome to Cardi</div>
+	<div class="text-2xl mb-12 -mt-12">Welcome to Cardi</div>
   <div class="w-4/5 max-w-md rounded shadow border border-gray-100 bg-white break-words p-8">
     <form class="w-full h-full">
       <div class="md:flex md:items-center mb-4">
@@ -58,7 +58,7 @@
         </button>
       </div>
       <div class="flex items-center justify-center flex-col">
-        <div class="text-xs">AWS access keys? Read about <a href="https://github.com/pickledish/cardi/wiki/About">how Cardi works</a></div>
+        <div class="text-sm">AWS access keys? Read about <a href="https://github.com/pickledish/cardi/wiki/About">how Cardi works</a></div>
       </div>
     </form>
   </div>

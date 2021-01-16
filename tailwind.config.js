@@ -15,6 +15,14 @@ module.exports = {
       'display': ['Courier', 'sans-serif'],
       'body': ['Nunito', 'sans-serif']
     },
+    fontSize: {
+      'xs': '.67rem',
+      'sm': '.8rem',
+      'base': '.9rem',
+      'lg': '1rem',
+      'xl': '1.25rem',
+      '2xl': '1.75rem',
+    },
     extend: {
       colors: {
         grey: {
@@ -38,9 +46,6 @@ module.exports = {
           700: "#415f41",
           900: "",
         },
-      },
-      padding: {
-        '1-5': '0.33rem',
       },
       height: {
         '1.5': '0.33rem',

@@ -91,7 +91,7 @@
 
 <div class="w-full md:w-4/5 mx-2 p-2">
   <div class="flex justify-between items-center w-auto h-16 mt-2">
-    <h1 class="mx-2 text-3xl">
+    <h1 class="mx-2 text-2xl">
       {#if $currBoard == ""}
         All Notes
       {:else if $currBoard == "none"}

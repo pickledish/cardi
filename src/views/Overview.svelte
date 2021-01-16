@@ -26,7 +26,7 @@
 {#if creds}
 <Navbar/>
 {/if}
-<div class="container mx-auto h-auto">
+<div class="container mx-auto h-auto xl:px-12">
   {#if creds}
   <div class="flex">
     <Sidebar/>

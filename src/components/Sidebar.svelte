@@ -93,7 +93,7 @@
   	<p>ALL BOARDS</p>
   </div>
 
-  <div class="flex items-center p-2 ml-4 text-md rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
+  <div class="flex items-center p-2 ml-4 rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700">
   	<Icon kind="search"/>
   	<input class="px-2 w-32 rounded outline-none" style="background-color: inherit;" bind:value={prefix}>
   </div>

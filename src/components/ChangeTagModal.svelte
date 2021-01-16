@@ -37,7 +37,7 @@
 <Modal bind:show={show_modal}>
   <div class="flex flex-col items-stretch text-grey-700">
 
-    <h1 class="mb-4 text-3xl dark:text-grey-100">{action} Tags</h1>
+    <h1 class="mb-4 text-2xl dark:text-grey-100">{action} Tags</h1>
 
     <TagSelect bind:items={selected}/>
 
