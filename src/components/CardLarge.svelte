@@ -45,7 +45,7 @@
 
 <div>
   {#if editing}
-  <input id="title" class="w-full mb-2 p-2 rounded border" value={fullNote.title || ""}/>
+  <input id="title" class="w-full mb-1 p-2 rounded border" value={fullNote.title || ""}/>
   {:else}
   <span class="text-2xl">
     {fullNote.title || "(no title)"}
@@ -60,7 +60,7 @@
     </span>
   </div>
   {#if editing}
-  <textarea id="content" class="w-full h-auto p-2 my-2 rounded border" rows="{rows || 1}" value={fullNote.content}/>
+  <textarea id="content" class="w-full h-auto p-2 my-3 rounded border" rows="{rows || 1}" value={fullNote.content}/>
   {:else}
   <div class="py-6">
     {@html marked(fullNote.content)}
@@ -83,7 +83,7 @@
         <button
           id="submit"
           on:click="{submit}"
-          class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded">
+          class="inline-block rounded bg-sage-300 dark:bg-sage-700 px-2 py-1 text-sm">
           Update
         </button>
       {/if}
