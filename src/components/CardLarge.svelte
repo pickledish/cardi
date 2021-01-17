@@ -33,7 +33,9 @@
       let secretKey = Cookie.get('awsSecretKey');
       let client = documentClient(accessKey, secretKey);
 
-      let response = await updateSnippet(client, fullNote.created, editedTitle, editedContent, searchKeys);
+      let fixedTitle = editedTitle.length == 0 ? null : editedTitle;
+
+      let response = await updateSnippet(client, fullNote.created, fixedTitle, editedContent, searchKeys);
 
       window.location.reload();
     } catch (err) {
@@ -45,7 +47,7 @@
 
 <div>
   {#if editing}
-  <input id="title" class="w-full mb-1 p-2 rounded border" value={fullNote.title || ""}/>
+  <input id="title" class="w-full mb-1 p-2 rounded bg-desk-100 dark:bg-desk-900" value={fullNote.title || ""}/>
   {:else}
   <span class="text-2xl">
     {fullNote.title || "(no title)"}
@@ -60,7 +62,7 @@
     </span>
   </div>
   {#if editing}
-  <textarea id="content" class="w-full h-auto p-2 my-3 rounded border" rows="{rows || 1}" value={fullNote.content}/>
+  <textarea id="content" class="w-full h-auto p-2 my-3 rounded bg-desk-100 dark:bg-desk-900" rows="{rows || 1}" value={fullNote.content}/>
   {:else}
   <div class="py-6">
     {@html marked(fullNote.content)}
