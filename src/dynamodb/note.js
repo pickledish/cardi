@@ -201,6 +201,31 @@ export async function getSnippet(client, status, created) {
   }
 }
 
+// currently does not support updating boards or image too
+export async function updateSnippet(client, created, title, content, search) {
+
+  let o = get(noteMap).get(created);
+
+  // This is a PUT so same will work for create and update
+  let createOperation = [
+    createSnippetOp(client, o.status, o.created, title, content, o.boards.values, search, o.image)
+  ];
+
+  // One very unnecessary transaction write because I am lazy (we don't inc/dec any boards here)
+  let transactionParams = {
+    "TransactItems": createOperation
+  };
+
+  try {
+    let result = await client.transactWrite(transactionParams).promise();
+    return true;
+  } catch (err) {
+    console.log(`Unable to create new snippet due to error from AWS: ${err}`);
+    throw err;
+  }
+
+}
+
 export async function createSnippet(client, status, created, title, content, boards, search, image) {
 
   // One operation to create the new snippet in the cardi-notes table
