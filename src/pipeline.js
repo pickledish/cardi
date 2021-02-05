@@ -1,7 +1,7 @@
 // When I die, please know that CORS is what killed me
 // This lovely proxy limits to somewhere on the order of 100 req per 15 min
 async function fetchPageText(url) {
-  let fullurl = "https://cors-anywhere.herokuapp.com/" + url;
+  let fullurl = "https://cors-cardi.herokuapp.com/" + url;
   return fetch(fullurl).then(response => response.text());
 }
 
