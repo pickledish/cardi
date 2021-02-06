@@ -43,6 +43,22 @@
     }
   }
 
+  // ~ Hacking ~ the markdown renderer to open links in new tabs with "target=_blank"
+  const renderer = {
+    link(href, title, text) {
+        let out = '<a href="' + href + '"';
+        if (title) {
+            out += ' title="' + title + '"';
+        }
+        out += ' target="_blank"'
+        out += ' rel="noopener noreferrer"'
+        out += '>' + text + '</a>';
+        return out;
+    }
+  }
+
+  marked.use({ renderer });
+
 </script>
 
 <div>
