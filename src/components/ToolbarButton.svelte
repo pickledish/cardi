@@ -2,6 +2,7 @@
 
   import Icon from './Icon.svelte'
 
+  export let name = "";
   export let icon = null;
   export let help = null;
   export let action = null;
@@ -24,9 +25,9 @@
     {help}
   </div>
   {/if}
-  <div class="mx-1 p-2 rounded shadow bg-sage-300 dark:bg-sage-700 cursor-pointer">
+  <button id="{name}" class="mx-1 p-2 rounded shadow bg-sage-300 dark:bg-sage-700 cursor-pointer">
     {#if icon}
     <Icon kind={icon}/>
     {/if}
-  </div>
+  </button>
 </div>
