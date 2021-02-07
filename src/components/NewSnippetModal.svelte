@@ -1,6 +1,8 @@
 <script>
 
   import Cookie from 'js-cookie'
+
+  import Icon from './Icon.svelte'
   import Modal from './Modal.svelte'
   import TagSelect from './TagSelect.svelte'
 
@@ -14,11 +16,14 @@
   let title_str = "";
   let content = "";
 
-  let selected = null;
+  let status = "NONE";
+  let selectedTags = null;
 
   async function submit() {
     try {
-      let boards = selected ? selected.map(elem => elem.value) : [];
+      status = "LOADING";
+
+      let boards = selectedTags ? selectedTags.map(elem => elem.value) : [];
 
       let title = null;
       let search = [];
@@ -48,11 +53,20 @@
 
       window.location.reload();
     } catch (err) {
+      status = "ERROR";
       console.log(err);
     }
   }
 
 </script>
+
+<style>
+
+  .rotate {
+    animation: rotation 2s infinite linear;
+  }
+
+</style>
 
 
 <Modal bind:show={$show_new_snippet_modal}>
@@ -64,23 +78,37 @@
 
     <textarea id="content" class="p-2 my-2 rounded border" placeholder="Text or URL" bind:value={content}></textarea>
 
-    <TagSelect bind:items={selected}/>
+    <TagSelect bind:items={selectedTags}/>
 
     <div class="mt-4">
-      <span class="float-right">
+      <div class="float-right flex items-center">
         <button
           id="cancel"
           on:click="{() => $show_new_snippet_modal = false}"
           class="hover:bg-desk-300 dark:text-white py-1 px-3 rounded">
           Cancel
         </button>
+        {#if status == "NONE"}
         <button
           id="submit"
           on:click="{submit}"
-          class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded">
+          class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded w-16 text-center">
           Create
         </button>
-      </span>
+        {:else if status == "LOADING"}
+        <div class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded w-16 flex justify-center items-center">
+          <div class="rotate w-min"><Icon kind="spinny"/></div>
+        </div>
+        {:else if status == "ERROR"}
+        <div class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded w-16 flex justify-center items-center">
+          <Icon kind="missing"/>
+        </div>
+        {:else}
+        <div class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded w-16 flex justify-center items-center">
+          <Icon kind="sad"/>
+        </div>
+        {/if}
+      </div>
     </div>
   </div>
 </Modal>
