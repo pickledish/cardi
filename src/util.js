@@ -11,9 +11,7 @@ export function toggleStore(store) {
 }
 
 export function isUrl(string) {
-  var urlRegex = new RegExp(
-    /^https?:\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/
-  );
+  var urlRegex = new RegExp(/^https?:\/\/([a-zA-Z-]+)(\.[a-zA-Z-]+)+(:[0-9]+)?(\S+)?$/);
   return urlRegex.test(string);
 }
 

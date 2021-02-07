@@ -65,7 +65,10 @@ module.exports = {
       borderWidth: {
         '0.5rem': '0.5rem',
       },
-    }
+      top: {
+        '-9': '-2.25rem',
+      },
+    },
   },
   variants: {
     extend: {},
