@@ -1,9 +1,10 @@
 {
   "name": "Cardi Notes",
   "short_name": "Cardi",
-  "theme_color": "#f4f2f0",
-  "background_color": "#e4baa1",
-  "display": "minimal-ui",
+  "description": "A full-featured, static-generated PWA for notes stored in privately owned DynamoDB tables",
+  "theme_color": "#415f41",
+  "background_color": "#f4f1ee",
+  "display": "standalone",
   "scope": "/",
   "start_url": "/",
   "icons": [
