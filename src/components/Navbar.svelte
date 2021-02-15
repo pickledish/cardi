@@ -23,11 +23,11 @@
         </span>
         <span>
           &nbsp;·&nbsp;
-          <a class="visited:text-primary" href="https://github.com/pickledish/cardi/wiki/About">About</a>
+          <a class="visited:text-primary" href="https://github.com/pickledish/cardi/">Source</a>
         </span>
         <span>
           &nbsp;·&nbsp;
-          <a class="visited:text-primary" href="https://github.com/pickledish/cardi/">Source</a>
+          <a class="visited:text-primary" href="https://github.com/pickledish/cardi/issues/new">Feedback</a>
         </span>
       </div>
     </section>
