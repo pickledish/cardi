@@ -52,7 +52,7 @@
     isMulti={true}
     isCreatable={true}
     optionIdentifier='label'
-    placeholder='Tags'
+    placeholder='Boards'
     createItem={customCreateItem}
     bind:selectedValue={items}
   />

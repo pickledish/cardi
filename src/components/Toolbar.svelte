@@ -68,8 +68,8 @@
     </div>
   {:else}
     <div class="flex items-center justify-between whitespace-nowrap">
-      <ToolbarButton name="addBoard" icon="square-plus" help="Add Tags" action={() => showModal("ADD")}/>
-      <ToolbarButton name="remBoard" icon="square-minus" help="Remove Tags" action={() => showModal("DELETE")}/>
+      <ToolbarButton name="addBoard" icon="square-plus" help="Add Boards" action={() => showModal("ADD")}/>
+      <ToolbarButton name="remBoard" icon="square-minus" help="Remove Boards" action={() => showModal("DELETE")}/>
       <ToolbarButton name="archive" icon="archive" help="Archive" action={handleBatchArchive}/>
       <ToolbarButton name="delete" icon="trash" help="Delete" action={handleBatchDelete}/>
     </div>
