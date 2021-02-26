@@ -19,6 +19,10 @@
   let status = "NONE";
   let selectedTags = null;
 
+  function focus(element){
+    element.focus();
+  }
+
   async function submit() {
     try {
       status = "LOADING";
@@ -76,7 +80,7 @@
 
     <input id="title" class="p-2 rounded border" placeholder="Title (optional)" bind:value={title_str}/>
 
-    <textarea id="content" class="p-2 my-2 rounded border" placeholder="Text or URL" bind:value={content}></textarea>
+    <textarea id="content" class="p-2 my-2 rounded border" placeholder="Text or URL" bind:value={content} use:focus></textarea>
 
     <TagSelect bind:items={selectedTags}/>
 
