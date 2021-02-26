@@ -42,8 +42,8 @@
     {#if image}
     <img class="object-contain w-full pt-4" src="{image}"/>
     {/if}
-    <div class="pt-4">
-      <span class="text-lg" on:click={() => $shownNote = created}>
+    <div class="pt-4 text-lg">
+      <span class="cursor-pointer" on:click={() => $shownNote = created}>
         {#if title !== null}{@html title}{:else}{content}{/if}
       </span>
     </div>

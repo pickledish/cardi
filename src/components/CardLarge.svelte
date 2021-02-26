@@ -73,7 +73,7 @@
     <div class="text-light">
       {created_date} » {updated_date}
     </div>
-    <span on:click="{() => editing = !editing}">
+    <span class="cursor-pointer" on:click="{() => editing = !editing}">
       [edit]
     </span>
   </div>
