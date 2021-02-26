@@ -35,7 +35,7 @@
       <div class="text-xs">
         <Checkbox object_id={created} object_store={tiles_checked} bind:checked={is_checked}/>
       </div>
-      <div class="text-xs">
+      <div class="text-xs whitespace-nowrap">
         {created_date}
       </div>
     </div>

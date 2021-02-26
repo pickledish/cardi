@@ -80,7 +80,7 @@
   {#if editing}
   <textarea id="content" class="w-full h-auto p-2 my-3 rounded bg-desk-100 dark:bg-desk-900" rows="{rows || 1}" value={fullNote.content}/>
   {:else}
-  <div class="py-6">
+  <div class="py-6 break-words">
     {@html marked(fullNote.content)}
   </div>
   {/if}
