@@ -74,6 +74,7 @@
 
 
 <Modal bind:show={$show_new_snippet_modal}>
+
   <div class="flex flex-col items-stretch text-grey-700">
 
     <h1 class="mb-4 text-2xl dark:text-grey-100">New Note</h1>

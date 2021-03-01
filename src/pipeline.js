@@ -1,8 +1,42 @@
+import pica from 'pica';
+
 // When I die, please know that CORS is what killed me
 // This lovely proxy limits to somewhere on the order of 100 req per 15 min
 async function fetchPageText(url) {
   let fullurl = "https://cors-cardi.herokuapp.com/" + url;
   return fetch(fullurl).then(response => response.text());
+}
+
+async function downsizeImage(imageUrl) {
+  let image = new Image();
+
+  image.crossOrigin = "anonymous"; // CORS killed me, remember?
+  image.src = imageUrl;
+
+  await image.decode(); // wait for the image to finish loading
+
+  let tuple = smallerDimensions(image);
+
+  let canvas = document.createElement("canvas");
+  canvas.width = tuple[0];
+  canvas.height = tuple[1];
+
+  await pica().resize(image, canvas, {
+    unsharpAmount: 80,
+    unsharpRadius: 0.6,
+    unsharpThreshold: 2
+  });
+
+  return canvas.toDataURL("image/jpeg");
+}
+
+function smallerDimensions(image) {
+  let origWidth = image.naturalWidth;
+  let origHeight = image.naturalHeight;
+  let newWidth = Math.min(origWidth, 256);
+  let scaledHeight = Math.floor(origHeight * (newWidth / origWidth));
+  let newHeight = Math.min(origHeight, scaledHeight);
+  return [newWidth, newHeight];
 }
 
 // Returns a struct of form {"title": "foo", "image": "bar"},
@@ -37,9 +71,15 @@ export async function getMetadata(url) {
   }
 
   if (imageMatch1) {
-    response["image"] = imageMatch1[1];
+    response["imageUrl"] = imageMatch1[1];
   } else if (imageMatch2) {
-    response["image"] = imageMatch2[1];
+    response["imageUrl"] = imageMatch2[1];
+  }
+
+  if (response["imageUrl"]) {
+    let proxied = "https://cors-cardi.herokuapp.com/" + response["imageUrl"];
+    let image64 = await downsizeImage(proxied);
+    response["image"] = image64;
   }
 
   return response;
