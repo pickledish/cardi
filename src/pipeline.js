@@ -1,8 +1,24 @@
+import pica from 'pica';
+
 // When I die, please know that CORS is what killed me
 // This lovely proxy limits to somewhere on the order of 100 req per 15 min
 async function fetchPageText(url) {
-  let fullurl = "https://cors-cardi.herokuapp.com/" + url;
+  let fullurl = "https://cors-anywhere.herokuapp.com/" + url;
   return fetch(fullurl).then(response => response.text());
+}
+
+// sleep time expects milliseconds
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+function smallerTuple(image) {
+  let origWidth = image.naturalWidth;
+  let origHeight = image.naturalHeight;
+  let newWidth = Math.min(origWidth, 256);
+  let scaledHeight = Math.floor(origHeight * (newWidth / origWidth));
+  let newHeight = Math.min(origHeight, scaledHeight);
+  return [newWidth, newHeight];
 }
 
 // Returns a struct of form {"title": "foo", "image": "bar"},
@@ -42,5 +58,27 @@ export async function getMetadata(url) {
     response["image"] = imageMatch2[1];
   }
 
-  return response;
+  let image = new Image();
+  image.crossOrigin = "anonymous"; // This enables CORS
+
+  image.onload = function() {
+    console.log("onload")
+    let tuple = smallerTuple(image);
+
+    let canvas = document.createElement("canvas");
+    canvas.width = tuple[0];
+    canvas.height = tuple[1];
+
+    pica().resize(image, canvas, {
+      unsharpAmount: 80,
+      unsharpRadius: 0.6,
+      unsharpThreshold: 2
+    }).then(result => console.log(canvas.toDataURL("image/png")));
+  };
+
+  image.src = "https://cors-anywhere.herokuapp.com/" + response["image"];
+
+  sleep(5000).then(() => {
+    return response;
+  });
 }
