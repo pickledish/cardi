@@ -7,12 +7,30 @@ async function fetchPageText(url) {
   return fetch(fullurl).then(response => response.text());
 }
 
-// sleep time expects milliseconds
-function sleep (time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
+async function downsizeImage(imageUrl) {
+  let image = new Image();
+
+  image.crossOrigin = "anonymous"; // CORS killed me, remember?
+  image.src = imageUrl;
+
+  await image.decode(); // wait for the image to finish loading
+
+  let tuple = smallerDimensions(image);
+
+  let canvas = document.createElement("canvas");
+  canvas.width = tuple[0];
+  canvas.height = tuple[1];
+
+  await pica().resize(image, canvas, {
+    unsharpAmount: 80,
+    unsharpRadius: 0.6,
+    unsharpThreshold: 2
+  });
+
+  return canvas.toDataURL("image/jpeg");
 }
 
-function smallerTuple(image) {
+function smallerDimensions(image) {
   let origWidth = image.naturalWidth;
   let origHeight = image.naturalHeight;
   let newWidth = Math.min(origWidth, 256);
@@ -53,32 +71,16 @@ export async function getMetadata(url) {
   }
 
   if (imageMatch1) {
-    response["image"] = imageMatch1[1];
+    response["imageUrl"] = imageMatch1[1];
   } else if (imageMatch2) {
-    response["image"] = imageMatch2[1];
+    response["imageUrl"] = imageMatch2[1];
   }
 
-  let image = new Image();
-  image.crossOrigin = "anonymous"; // This enables CORS
+  if (response["imageUrl"]) {
+    let proxied = "https://cors-anywhere.herokuapp.com/" + response["imageUrl"];
+    let image64 = await downsizeImage(proxied);
+    response["image"] = image64;
+  }
 
-  image.onload = function() {
-    console.log("onload")
-    let tuple = smallerTuple(image);
-
-    let canvas = document.createElement("canvas");
-    canvas.width = tuple[0];
-    canvas.height = tuple[1];
-
-    pica().resize(image, canvas, {
-      unsharpAmount: 80,
-      unsharpRadius: 0.6,
-      unsharpThreshold: 2
-    }).then(result => console.log(canvas.toDataURL("image/png")));
-  };
-
-  image.src = "https://cors-anywhere.herokuapp.com/" + response["image"];
-
-  sleep(5000).then(() => {
-    return response;
-  });
+  return response;
 }
