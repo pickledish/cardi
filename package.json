@@ -29,7 +29,6 @@
     "js-cookie": "^2.2.1",
     "marked": "^1.1.1",
     "masonry-layout": "^4.2.2",
-    "pica": "^6.1.1",
     "sirv-cli": "^1.0.0",
     "svelte-select": "^3.10.1",
     "svelte-spa-router": "^1.3.0"

@@ -1,5 +1,3 @@
-import pica from 'pica';
-
 // When I die, please know that CORS is what killed me
 // This lovely proxy limits to somewhere on the order of 100 req per 15 min
 async function fetchPageText(url) {
@@ -33,7 +31,7 @@ async function downsizeImage(imageUrl) {
 function smallerDimensions(image) {
   let origWidth = image.naturalWidth;
   let origHeight = image.naturalHeight;
-  let newWidth = Math.min(origWidth, 256);
+  let newWidth = Math.min(origWidth, 320);
   let scaledHeight = Math.floor(origHeight * (newWidth / origWidth));
   let newHeight = Math.min(origHeight, scaledHeight);
   return [newWidth, newHeight];
