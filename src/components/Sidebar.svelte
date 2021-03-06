@@ -12,7 +12,7 @@
 
   import { onMount } from 'svelte';
 
-  import { resetView, toggleStore } from '../util.js';
+  import { resetView, toggleStore } from '../util/util.js';
 
   // When we load the sidebar, async get all boards, then update the tag store
   onMount(async () => {

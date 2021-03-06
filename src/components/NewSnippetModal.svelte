@@ -9,9 +9,9 @@
   import { show_new_snippet_modal } from '../store.js'
   import { documentClient } from '../dynamodb/client.js'
   import { createSnippet } from '../dynamodb/note.js'
-  import { toSearchKeys } from '../search.js'
-  import { getMetadata } from '../pipeline.js'
-  import { isUrl } from '../util.js'
+  import { toSearchKeys } from '../util/search.js'
+  import { getMetadata } from '../util/pipeline.js'
+  import { isUrl } from '../util/util.js'
 
   let title_str = "";
   let content = "";

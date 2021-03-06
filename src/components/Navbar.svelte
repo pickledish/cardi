@@ -4,7 +4,7 @@
   import NewSnippetModal from './NewSnippetModal.svelte'
 
   import { showSidebar } from '../store.js';
-  import { toggleStore } from '../util.js';
+  import { toggleStore } from '../util/util.js';
 
 </script>
 

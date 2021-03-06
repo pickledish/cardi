@@ -2,11 +2,11 @@ import Cookie from 'js-cookie'
 
 import { writable, derived } from 'svelte/store';
 
-import { queryStore } from './querystore.js'
-import { listToMap } from './util.js';
+import { queryStore } from './util/querystore.js'
+import { listToMap } from './util/util.js';
 import { documentClient } from './dynamodb/client.js'
 import { getSnippets } from './dynamodb/note.js'
-import { toSearchKeys } from './search.js'
+import { toSearchKeys } from './util/search.js'
 
 // ----------------------------------------------------------------------------
 // Parameters, stored in the querystring and updated via the UI
