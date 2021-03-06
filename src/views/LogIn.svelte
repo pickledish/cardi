@@ -39,7 +39,7 @@
           </label>
         </div>
         <div class="md:w-full">
-          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700" id="accesskey" type="text" placeholder="AKIA...">
+          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-grey-700 leading-tight focus:outline-none focus:border-red-700" id="accesskey" type="text" placeholder="AKIA...">
         </div>
       </div>
       <div class="md:flex md:items-center mb-8">
@@ -49,11 +49,11 @@
           </label>
         </div>
         <div class="md:w-full">
-          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-red-700" id="secretkey" type="password" placeholder="**********************">
+          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-grey-700 leading-tight focus:outline-none focus:border-red-700" id="secretkey" type="password" placeholder="**********************">
         </div>
       </div>
       <div class="flex items-end justify-end mb-8">
-        <button class="shadow bg-red-700 hover:bg-red-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" id="submit" type="button" on:click={setup}>
+        <button class="shadow bg-red-700 hover:bg-red-600 focus:shadow-outline focus:outline-none text-grey-100 font-bold py-2 px-4 rounded" id="submit" type="button" on:click={setup}>
         	<Icon kind="right"/>
         </button>
       </div>

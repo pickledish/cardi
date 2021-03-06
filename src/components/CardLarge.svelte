@@ -89,7 +89,7 @@
     <div>
       {#each Array.from(fullNote.boards.values) as id}
       <span
-        class="inline-block rounded bg-gray-200 px-2 py-1 text-sm text-gray-700 mr-2 cursor-pointer"
+        class="inline-block rounded bg-gray-200 px-2 py-1 text-sm text-grey-700 mr-2 cursor-pointer"
         on:click={() => $currBoard = id}
       >
         {$boardMap.get(id) && $boardMap.get(id).name}

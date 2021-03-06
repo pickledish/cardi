@@ -21,7 +21,7 @@
 
 <div class="relative" on:click={action} on:mouseover={handleOver} on:mouseout={handleOut}>
   {#if showHelp}
-  <div class="absolute bg-desk-900 text-white whitespace-nowrap -top-9 left-1/2 transform -translate-x-2/4 z-50 rounded px-2 py-1">
+  <div class="absolute bg-desk-900 text-grey-100 whitespace-nowrap -top-9 left-1/2 transform -translate-x-2/4 z-50 rounded px-2 py-1">
     {help}
   </div>
   {/if}

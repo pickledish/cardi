@@ -90,26 +90,26 @@
         <button
           id="cancel"
           on:click="{() => $show_new_snippet_modal = false}"
-          class="hover:bg-desk-300 dark:text-white py-1 px-3 rounded">
+          class="hover:bg-desk-300 dark:text-grey-100 py-1 px-3 rounded">
           Cancel
         </button>
         {#if status == "NONE"}
         <button
           id="submit"
           on:click="{submit}"
-          class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded w-16 text-center">
+          class="bg-sage-300 dark:bg-sage-700 dark:text-grey-100 py-1 px-3 rounded w-16 text-center">
           Create
         </button>
         {:else if status == "LOADING"}
-        <div class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded w-16 flex justify-center items-center">
+        <div class="bg-sage-300 dark:bg-sage-700 dark:text-grey-100 py-1 px-3 rounded w-16 flex justify-center items-center">
           <div class="rotate w-min"><Icon kind="spinny"/></div>
         </div>
         {:else if status == "ERROR"}
-        <div class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded w-16 flex justify-center items-center">
+        <div class="bg-sage-300 dark:bg-sage-700 dark:text-grey-100 py-1 px-3 rounded w-16 flex justify-center items-center">
           <Icon kind="missing"/>
         </div>
         {:else}
-        <div class="bg-sage-300 dark:bg-sage-700 dark:text-white py-1 px-3 rounded w-16 flex justify-center items-center">
+        <div class="bg-sage-300 dark:bg-sage-700 dark:text-grey-100 py-1 px-3 rounded w-16 flex justify-center items-center">
           <Icon kind="sad"/>
         </div>
         {/if}
