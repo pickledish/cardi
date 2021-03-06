@@ -2,7 +2,7 @@
 
   import Cookie from 'js-cookie'
 
-  import { currBoard, boardMap, tiles_checked, show_new_snippet_modal } from '../store.js';
+  import { currBoard, currArchived, boardMap, tiles_checked, show_new_snippet_modal } from '../store.js'
   import { changeStatus, deleteSnippet } from '../dynamodb/note.js'
   import { documentClient } from '../dynamodb/client.js'
 
@@ -19,13 +19,22 @@
     show_tag_modal = true;
   }
 
+  function statusOrder() {
+    if ($currArchived) {
+      return ["archived", "current"];
+    } else {
+      return ["current", "archived"];
+    }
+  }
+
   async function handleBatchArchive() {
+    let [from, to] = statusOrder();
     let accessKey = Cookie.get('awsAccessKey');
     let secretKey = Cookie.get('awsSecretKey');
     let client = documentClient(accessKey, secretKey);
     let success = await Promise.all(
       Array.from($tiles_checked).map(async (created) => {
-        return await changeStatus(client, "current", created, "archived");
+        return await changeStatus(client, from, created, to);
       })
     );
     window.location.reload();
@@ -70,7 +79,7 @@
     <div class="flex items-center justify-between whitespace-nowrap">
       <ToolbarButton name="addBoard" icon="square-plus" help="Add Boards" action={() => showModal("ADD")}/>
       <ToolbarButton name="remBoard" icon="square-minus" help="Remove Boards" action={() => showModal("DELETE")}/>
-      <ToolbarButton name="archive" icon="archive" help="Archive" action={handleBatchArchive}/>
+      <ToolbarButton name="archive" icon="archive" help={$currArchived ? "Restore" : "Archive"} action={handleBatchArchive}/>
       <ToolbarButton name="delete" icon="trash" help="Delete" action={handleBatchDelete}/>
     </div>
   {/if}
