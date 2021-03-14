@@ -66,10 +66,10 @@ function getOneOperation(status, created) {
   }
 }
 
-function getManyOperation(status, afterMs, board, search, ascending) {
+function getManyOperation(status, afterMs, beforeMs, board, search, ascending) {
   let key_filters = [
     `#status = :status`,
-    `#created > :afterMs`,
+    `#created BETWEEN :afterMs AND :beforeMs`,
   ];
   let other_filters = [];
   let expressionAttributeNames = {
@@ -79,6 +79,7 @@ function getManyOperation(status, afterMs, board, search, ascending) {
   let expressionAttributeValues = {
     ":status": status,
     ":afterMs": afterMs,
+    ":beforeMs": beforeMs,
   }
   if (board == "none") {
     other_filters.push('attribute_not_exists (#boards)');
@@ -174,6 +175,7 @@ export async function getSnippets(client, struct) {
   let operation = getManyOperation(
     struct.status,
     struct.afterMs,
+    struct.beforeMs,
     struct.board,
     struct.search,
     struct.ascending

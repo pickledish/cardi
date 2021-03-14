@@ -14,6 +14,7 @@ import { toSearchKeys } from './util/search.js'
 
 export const currArchived  = queryStore("arch", false);
 export const currAfterMs   = queryStore("after", 0);
+export const currBeforeMs  = queryStore("before", 3000000000000);
 export const currBoard     = queryStore("board", "");
 export const currSearch    = queryStore("search", "");
 export const currAscending = queryStore("asc", false);
@@ -27,6 +28,7 @@ export const currentParams = derived(
   [
     currArchived,
     currAfterMs,
+    currBeforeMs,
     currBoard,
     currSearch,
     currAscending,
@@ -36,10 +38,11 @@ export const currentParams = derived(
     let struct = {
       "status": params[0] ? "archived" : "current",
       "afterMs": params[1],
-      "board": params[2],
-      "search": toSearchKeys(params[3]),
-      "ascending": params[4],
-      "pageSize": params[5],
+      "beforeMs": params[2],
+      "board": params[3],
+      "search": toSearchKeys(params[4]),
+      "ascending": params[5],
+      "pageSize": params[6],
     }
     console.log(`Update, triggering refresh: ${JSON.stringify(struct)}`);
     return struct;
