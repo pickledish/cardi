@@ -1,6 +1,6 @@
 import Cookie from 'js-cookie'
 
-import { writable, derived } from 'svelte/store';
+import { writable, derived, get } from 'svelte/store';
 
 import { queryStore } from './util/querystore.js'
 import { listToMap } from './util/util.js';
@@ -28,23 +28,26 @@ export const currentParams = derived(
   [
     currArchived,
     currAfterMs,
-    currBeforeMs,
     currBoard,
     currSearch,
     currAscending,
     currPageSize,
   ],
   params => {
+    // Note, this is extremely jank --
+    // we only reactively update if currAfterMs updates, and not currBeforeMs,
+    // because Svelte doesn't let us atomically update 2 stores at once,
+    // and if we try to derive from and update both, we get a race condition;
+    // so when you're setting both, you need to set currBeforeMs first!
     let struct = {
       "status": params[0] ? "archived" : "current",
       "afterMs": params[1],
-      "beforeMs": params[2],
-      "board": params[3],
-      "search": toSearchKeys(params[4]),
-      "ascending": params[5],
-      "pageSize": params[6],
+      "beforeMs": get(currBeforeMs),
+      "board": params[2],
+      "search": toSearchKeys(params[3]),
+      "ascending": params[4],
+      "pageSize": params[5],
     }
-    console.log(`Update, triggering refresh: ${JSON.stringify(struct)}`);
     return struct;
   }
 );
@@ -56,6 +59,7 @@ export const currentParams = derived(
 export const noteList = derived(
   currentParams,
   async (params, set) => {
+    console.log(`Update, triggering refresh: ${JSON.stringify(params)}`);
     let accessKey = Cookie.get('awsAccessKey');
     let secretKey = Cookie.get('awsSecretKey');
     let client = documentClient(accessKey, secretKey);

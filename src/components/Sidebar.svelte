@@ -1,14 +1,16 @@
 <script>
 	import dayjs from 'dayjs'
   import Cookie from 'js-cookie'
+  import Popover from 'svelte-popover'
 
   import Checkbox from './Checkbox.svelte'
+  import MonthPicker from './MonthPicker.svelte'
   import SidebarItem from './SidebarItem.svelte'
   import Icon from './Icon.svelte'
 
   import { documentClient } from '../dynamodb/client.js'
   import { getBoards } from '../dynamodb/board.js'
-  import { currArchived, currAscending, currAfterMs, currBoard, boardList, sortedBoardList, showSidebar } from '../store.js'
+  import { currArchived, currAscending, currAfterMs, currBeforeMs, currBoard, boardList, sortedBoardList, showSidebar } from '../store.js'
 
   import { onMount } from 'svelte'
 
@@ -58,19 +60,26 @@
     action={() => ($currBoard = "none") && resetView()}
   />
 
+  <!-- We need to be sure to set currBeforeMs first here, see the jank in store.js! -->
   <SidebarItem
     icon="calendar"
     text="This Month"
     selected={$currAfterMs == dayjs().startOf('month').unix() * 1000}
-    action={() => ($currAfterMs = dayjs().startOf('month').unix() * 1000) && resetView()}
+    action={() => ($currBeforeMs = 3000000000000) && ($currAfterMs = dayjs().startOf('month').unix() * 1000) && resetView()}
   />
 
-  <SidebarItem
-    icon="history"
-    text="From Today"
-    selected={$currAfterMs == dayjs().startOf('day').unix() * 1000}
-    action={() => ($currAfterMs = dayjs().startOf('day').unix() * 1000) && resetView()}
-  />
+  <Popover>
+    <div class="w-full" slot="target">
+      <SidebarItem
+        icon="history"
+        text="Back in Time"
+        selected={$currAfterMs > 0 && $currAfterMs < dayjs().startOf('month').unix() * 1000}
+      />
+    </div>
+    <div slot="content">
+      <MonthPicker/>
+    </div>
+  </Popover>
 
   <SidebarItem
     icon="archive"
