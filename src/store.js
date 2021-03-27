@@ -34,7 +34,7 @@ export const currentParams = derived(
     currPageSize,
   ],
   params => {
-    // Note, this is extremely jank --
+    // Note, this is pretty jank --
     // we only reactively update if currAfterMs updates, and not currBeforeMs,
     // because Svelte doesn't let us atomically update 2 stores at once,
     // and if we try to derive from and update both, we get a race condition;
