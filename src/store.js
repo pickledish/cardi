@@ -1,9 +1,10 @@
 import Cookie from 'js-cookie'
 
-import { writable, derived, get } from 'svelte/store';
+import { writable, derived, get } from 'svelte/store'
 
+import * as constants from './constants.js'
 import { queryStore } from './util/querystore.js'
-import { listToMap } from './util/util.js';
+import { listToMap } from './util/util.js'
 import { documentClient } from './dynamodb/client.js'
 import { getSnippets } from './dynamodb/note.js'
 import { toSearchKeys } from './util/search.js'
@@ -12,13 +13,13 @@ import { toSearchKeys } from './util/search.js'
 // Parameters, stored in the querystring and updated via the UI
 // ----------------------------------------------------------------------------
 
-export const currArchived  = queryStore("arch", false);
-export const currAfterMs   = queryStore("after", 0);
-export const currBeforeMs  = queryStore("before", 3000000000000);
-export const currBoard     = queryStore("board", "");
-export const currSearch    = queryStore("search", "");
-export const currAscending = queryStore("asc", false);
-export const currPageSize  = queryStore("page", 18);
+export const currArchived  = queryStore("arch", constants.defaultArchived);
+export const currAfterMs   = queryStore("after", constants.defaultAfterMs);
+export const currBeforeMs  = queryStore("before", constants.defaultBeforeMs);
+export const currBoard     = queryStore("board", constants.defaultBoard);
+export const currSearch    = queryStore("search", constants.defaultSearch);
+export const currAscending = queryStore("asc", constants.defaultAscending);
+export const currPageSize  = queryStore("page", constants.defaultPageSize);
 
 // ----------------------------------------------------------------------------
 // The parameter struct, updated reactively based on any individual store

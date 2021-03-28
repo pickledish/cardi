@@ -8,6 +8,7 @@
   import SidebarItem from './SidebarItem.svelte'
   import Icon from './Icon.svelte'
 
+  import { defaultBeforeMs, defaultAfterMs } from '../constants.js'
   import { documentClient } from '../dynamodb/client.js'
   import { getBoards } from '../dynamodb/board.js'
   import { currArchived, currAscending, currAfterMs, currBeforeMs, currBoard, boardList, sortedBoardList, showSidebar } from '../store.js'
@@ -52,7 +53,7 @@
   <SidebarItem
     icon="home"
     text="Overview"
-    selected={$currBoard == "" && $currAfterMs == 0}
+    selected={$currBoard == "" && $currAfterMs == defaultAfterMs}
     action={() => (window.location = "/") && resetView()}
   />
 
@@ -68,7 +69,7 @@
     icon="calendar"
     text="This Month"
     selected={$currAfterMs == dayjs().startOf('month').unix() * 1000}
-    action={() => ($currBeforeMs = 3000000000000) && ($currAfterMs = dayjs().startOf('month').unix() * 1000) && resetView()}
+    action={() => ($currBeforeMs = defaultBeforeMs) && ($currAfterMs = dayjs().startOf('month').unix() * 1000) && resetView()}
   />
 
   <Popover>
@@ -76,7 +77,7 @@
       <SidebarItem
         icon="history"
         text="Back in Time"
-        selected={$currAfterMs > 0 && $currAfterMs < dayjs().startOf('month').unix() * 1000}
+        selected={$currAfterMs > defaultAfterMs && $currAfterMs < dayjs().startOf('month').unix() * 1000}
       />
     </div>
     <div slot="content">

@@ -50,17 +50,17 @@
     <div class="flex flex-col justify-center pr-3 border-r-2 border-sage-700 dark:border-sage-300">
       {#each Object.entries(years) as [name, value]}
         <div
-          class="rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700 {selectedYear == value ? "font-bold" : ""}"
+          class="font-mono rounded cursor-pointer mt-0.5 mb-0.5 hover:bg-desk-300 dark:hover:bg-desk-700 {selectedYear == value ? "font-bold" : ""}"
           on:click={() => selectedYear = value}
         >
           {name}
         </div>
       {/each}
     </div>
-    <div class="flex flex-col justify-center pl-3">
+    <div class="grid grid-cols-3 gap-x-3 gap-y-1 pl-3">
       {#each Object.entries(months) as [name, value]}
         <div
-          class="rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700 {selectedMonth == value ? "font-bold" : ""}"
+          class="font-mono rounded cursor-pointer hover:bg-desk-300 dark:hover:bg-desk-700 {selectedMonth == value ? "font-bold" : ""}"
           on:click={() => selectedMonth = value}
         >
           {name}

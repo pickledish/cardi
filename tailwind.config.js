@@ -13,7 +13,8 @@ module.exports = {
   theme: {
     fontFamily: {
       'display': ['Courier', 'sans-serif'],
-      'body': ['Nunito', 'sans-serif']
+      'body': ['Nunito', 'sans-serif'],
+      'mono': ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace']
     },
     fontSize: {
       'xs': '.67rem',
