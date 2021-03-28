@@ -38,6 +38,9 @@
   .open {
     left: 0;
   }
+  :global(.target) {
+    width: 100%;
+  }
 </style>
 
 <aside class="w-full md:w-1/5 min-w-14rem absolute -left-full md:left-0 md:relative z-10 bg-desk-100 dark:bg-desk-900 {$showSidebar ? "open" : ""} pt-4 px-4">
