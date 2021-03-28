@@ -28,10 +28,13 @@
 
 </script>
 
-<div class="h-full w-full flex flex-col justify-center items-center">
-	<div class="text-2xl mb-12 -mt-12">Welcome to Cardi</div>
-  <div class="w-4/5 max-w-md rounded shadow border border-gray-100 bg-white break-words p-8">
+<div class="h-screen w-full flex flex-col justify-center items-center">
+  <div class="w-4/5 max-w-md rounded shadow bg-white dark:bg-desk-700 bg-white break-words p-8">
     <form class="w-full h-full">
+      <div class="flex justify-center items-center mb-8">
+        <img class="object-contain h-12 mr-4" src="/icons/icon-xparent-512.png"/>
+        <span class="text-xl">Cardi Notes</span>
+      </div>
       <div class="md:flex md:items-center mb-4">
         <div class="md:w-40">
           <label class="block text-primary font-bold md:text-right mb-1 md:mb-0 pr-4" for="accesskey">
@@ -39,7 +42,7 @@
           </label>
         </div>
         <div class="md:w-full">
-          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-grey-700 leading-tight focus:outline-none focus:border-red-700" id="accesskey" type="text" placeholder="AKIA...">
+          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-grey-700 leading-tight focus:outline-none focus:border-sage-700 dark:focus:border-sage-300" id="accesskey" type="text" placeholder="AKIA...">
         </div>
       </div>
       <div class="md:flex md:items-center mb-8">
@@ -49,11 +52,11 @@
           </label>
         </div>
         <div class="md:w-full">
-          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-grey-700 leading-tight focus:outline-none focus:border-red-700" id="secretkey" type="password" placeholder="**********************">
+          <input class="border-2 border-gray-200 rounded w-full py-2 px-4 text-grey-700 leading-tight focus:outline-none focus:border-sage-700 dark:focus:border-sage-300" id="secretkey" type="password" placeholder="**********************">
         </div>
       </div>
       <div class="flex items-end justify-end mb-8">
-        <button class="shadow bg-red-700 hover:bg-red-600 focus:shadow-outline focus:outline-none text-grey-100 font-bold py-2 px-4 rounded" id="submit" type="button" on:click={setup}>
+        <button class="shadow bg-sage-700 dark:bg-sage-300 focus:shadow-outline focus:outline-none text-grey-100 font-bold py-2 px-4 rounded" id="submit" type="button" on:click={setup}>
         	<Icon kind="right"/>
         </button>
       </div>
