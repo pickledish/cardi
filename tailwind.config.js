@@ -54,6 +54,11 @@ module.exports = {
       height: {
         '1.5': '0.33rem',
       },
+      maxHeight: {
+        '1/4': '25%',
+        '1/2': '50%',
+        '3/4': '75%',
+      },
       textColor: {
         'primary': '',
         'secondary': '#444444',
