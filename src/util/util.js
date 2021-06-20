@@ -12,3 +12,7 @@ export function isUrl(string) {
   var urlRegex = new RegExp(/^https?:\/\/([a-zA-Z-]+)(\.[a-zA-Z-]+)+(:[0-9]+)?(\S+)?$/);
   return urlRegex.test(string);
 }
+
+export function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

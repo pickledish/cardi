@@ -11,6 +11,7 @@
 
   import MessageTile from './MessageTile.svelte';
   import Toolbar from './Toolbar.svelte'
+  import Spinner from './Spinner.svelte'
 
   let masonry = null;
 
@@ -60,7 +61,9 @@
           </div>
         </div>
       {:else}
-        No messages found! Check console for errors
+        <div class="w-full text-center py-8 relative">
+          <Spinner/>
+        </div>
       {/each}
     </div>
   </div>
