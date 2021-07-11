@@ -24,6 +24,10 @@ module.exports = {
       'xl': '1.25rem',
       '2xl': '1.75rem',
     },
+    opacity: {
+      '0': '0',
+      '15': '.15',
+    },
     extend: {
       colors: {
         grey: {

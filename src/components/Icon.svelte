@@ -101,6 +101,9 @@
     <line x1="7.75" y1="16.25" x2="5.6" y2="18.4" />
     <line x1="6" y1="12" x2="3" y2="12" />
     <line x1="7.75" y1="7.75" x2="5.6" y2="5.6" />
+  {:else if kind == "circle"}
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <circle cx="12" cy="12" r="9" />
   {:else}
     {console.log(`Unknown icon: ${kind}`)}
   {/if}

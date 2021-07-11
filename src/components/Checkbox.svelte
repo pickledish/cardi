@@ -16,8 +16,6 @@
     ? "text-black bg-grey-300 border-grey-300 dark:text-white dark:bg-grey-500 dark:border-grey-500"
     : "text-sage-700 bg-white border-desk-300 dark:text-sage-300 dark:bg-grey-700 dark:border-grey-500";
 
-  $: opacity = (checked) ? "100" : "0";
-
   function handle_check_change() {
     if (object_store != null) {
       if (checked) {
@@ -35,9 +33,15 @@
 <label class="flex justify-start items-start">
   <div class="{colors} border-2 rounded w-5 h-5 flex flex-shrink-0 justify-center items-center">
     <input type="checkbox" class="opacity-0 absolute" bind:checked={checked} on:change={handle_check_change}>
-    <div class="pointer-events-none opacity-{opacity}">
+    {#if checked}
+    <div class="pointer-events-none">
       <Icon kind="check" size={16} width={3.0}/>
     </div>
+    {:else if tag_style}
+    <div class="pointer-events-none opacity-15">
+      <Icon kind="circle" size={12} width={3.0}/>
+    </div>
+    {/if}
   </div>
   <div class="select-none">{label}</div>
 </label>
