@@ -17,7 +17,7 @@ module.exports = {
       'mono': ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', "Liberation Mono", "Courier New", 'monospace']
     },
     fontSize: {
-      'xs': '.67rem',
+      'xs': '.7rem',
       'sm': '.8rem',
       'base': '.9rem',
       'lg': '1rem',
@@ -49,7 +49,11 @@ module.exports = {
         },
       },
       padding: {
+        '0.75': '0.15rem',
         '1.75': '0.425rem',
+      },
+      margin: {
+        '0.75': '0.15rem',
       },
       height: {
         '1.5': '0.33rem',

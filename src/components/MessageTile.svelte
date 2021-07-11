@@ -29,35 +29,35 @@
 
 </style>
 
-<div class="rounded shadow bg-white dark:bg-desk-700 break-words py-5 pr-5 pl-3 border-l-0.5rem {colors}">
+<div class="rounded shadow bg-white dark:bg-desk-700 break-words border-b-0.5rem {colors}">
   <div class="flex flex-col">
-    <div class="flex justify-between">
-      <div class="text-xs">
-        <Checkbox object_id={created} object_store={tiles_checked} bind:checked={is_checked}/>
-      </div>
-      <div class="text-xs whitespace-nowrap">
-        {created_date}
-      </div>
-    </div>
     {#if image}
-    <img class="object-contain w-full pt-4" src="{image}"/>
+    <img class="rounded-t object-contain w-full" src="{image}"/>
     {/if}
-    <div class="pt-4 text-lg">
-      <span class="cursor-pointer" on:click={() => $shownNote = created}>
-        {#if title !== null}{@html title}{:else}{content}{/if}
-      </span>
+    <div class="px-5 pt-6 pb-3">
+      <div class="text-lg">
+        <span class="cursor-pointer" on:click={() => $shownNote = created}>
+          {#if title !== null}{@html title}{:else}{content}{/if}
+        </span>
+      </div>
+      <div class="flex justify-between pt-4">
+        <div class="self-center text-xs text-grey-500 dark:text-grey-300 whitespace-nowrap">
+          {created_date}
+        </div>
+        <div class="flex self-center text-xs whitespace-nowrap">
+          {#if boards && boards.length !== 0}
+            {#each Array.from(boards.values) as id}
+            <span
+              class="inline-block rounded bg-grey-300 dark:bg-grey-500 px-2 py-0.75 mr-1.5 text-xs cursor-pointer"
+              on:click={() => $currBoard = id}
+            >
+              {$boardMap.get(id) && $boardMap.get(id).name}
+            </span>
+            {/each}
+          {/if}
+          <Checkbox object_id={created} object_store={tiles_checked} tag_style={true} bind:checked={is_checked}/>
+        </div>
+      </div>
     </div>
-    {#if boards && boards.length !== 0}
-    <div class="pt-3">
-      {#each Array.from(boards.values) as id}
-      <span
-        class="inline-block rounded bg-grey-300 dark:bg-grey-500 px-2 py-1 text-xs mr-2 cursor-pointer"
-        on:click={() => $currBoard = id}
-      >
-        {$boardMap.get(id) && $boardMap.get(id).name}
-      </span>
-      {/each}
-    </div>
-    {/if}
   </div>
 </div>
