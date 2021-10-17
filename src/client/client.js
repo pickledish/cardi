@@ -9,6 +9,7 @@ function GenericClient() {
   this.updateSnippet = async function() {};
   this.changeStatus = async function() {};
   this.deleteSnippet = async function() {};
+  this.getBoards = async function() {};
   this.changeBoards = async function() {};
 };
 

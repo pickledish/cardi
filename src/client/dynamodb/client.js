@@ -12,6 +12,8 @@ function DynamoDbClient(accessKey, secretKey) {
     "secretAccessKey": secretKey,
   });
 
+  this.boards = null;
+
   this.ensureTable = async function() {};
 
   this.getSnippets = async function() {};
@@ -20,6 +22,7 @@ function DynamoDbClient(accessKey, secretKey) {
   this.changeStatus = async function() {};
   this.deleteSnippet = async function() {};
 
+  this.getBoards = async function() {};
   this.changeBoards = async function() {};
 
 };
