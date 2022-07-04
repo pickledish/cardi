@@ -36,14 +36,11 @@
   }
 
   async function handleBatchDelete() {
-    let accessKey = Cookie.get('awsAccessKey');
-    let secretKey = Cookie.get('awsSecretKey');
-    let client = documentClient(accessKey, secretKey);
     let ok = window.confirm("Are you sure you want to delete notes?");
     if (ok) {
       let success = await Promise.all(
         Array.from($tiles_checked).map(async (created) => {
-          return await deleteSnippet(client, created);
+          return await client.deleteSnippet(created);
         })
       );
       window.location.reload();

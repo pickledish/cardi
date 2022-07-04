@@ -12,7 +12,7 @@
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@rollup/plugin-replace": "^2.3.3",
     "autoprefixer": "^9.8.6",
-    "playwright": "^1.5.1",
+    "playwright": "^1.7.0",
     "postcss": "^7.0.35",
     "postcss-import": "^12",
     "rollup": "^2.3.4",
