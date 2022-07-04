@@ -1,28 +1,56 @@
-function DynamoDbClient(accessKey, secretKey) {
+import {ensureTables} from './table.js';
+import {getSnippet, getSnippets, createSnippet, updateSnippet, changeStatus, deleteSnippet, changeBoards} from './note.js';
+import {getBoards} from './board.js';
 
-  tableClient = new AWS.DynamoDB({
-    "region": "us-east-2",
-    "accessKeyId": accessKey,
-    "secretAccessKey": secretKey,
-  });
+export class DynamoClient {
 
-  documentClient = new AWS.DynamoDB.DocumentClient({
-    "region": "us-east-2",
-    "accessKeyId": accessKey,
-    "secretAccessKey": secretKey,
-  });
+  constructor(opts) {
+    this.tableClient = new AWS.DynamoDB({
+      "region": "us-east-2",
+      "accessKeyId": opts["accessKey"],
+      "secretAccessKey": opts["secretKey"],
+    });
+    this.documentClient = new AWS.DynamoDB.DocumentClient({
+      "region": "us-east-2",
+      "accessKeyId": opts["accessKey"],
+      "secretAccessKey": opts["secretKey"],
+    });
+  }
 
-  this.boards = null;
+  async ensureTables() {
+    return ensureTables(this.tableClient);
+  };
 
-  this.ensureTable = async function() {};
+  async getSnippet(status, created) {
+    return getSnippet(this.documentClient, status, created);
+  };
 
-  this.getSnippets = async function() {};
-  this.createSnippet = async function() {};
-  this.updateSnippet = async function() {};
-  this.changeStatus = async function() {};
-  this.deleteSnippet = async function() {};
+  async getSnippets(struct) {
+    return getSnippets(this.documentClient, struct);
+  };
 
-  this.getBoards = async function() {};
-  this.changeBoards = async function() {};
+  async createSnippet(status, created, title, content, boards, search, image) {
+    return createSnippet(this.documentClient, status, created, title, content, boards, search, image);
+  };
+
+  async updateSnippet(created, title, content, search) {
+    return updateSnippet(this.documentClient, created, title, content, search);
+  };
+
+  async changeStatus(oldStatus, created, newStatus) {
+    return changeStatus(this.documentClient, oldStatus, created, newStatus);
+  };
+
+  async deleteSnippet(created) {
+    return deleteSnippet(this.documentClient, created);
+  };
+
+  async changeBoards(status, created, boards, action) {
+    return changeBoards(this.documentClient, status, created, boards, action);
+  };
+
+  async getBoards() {
+    return getBoards(this.documentClient);
+  };
 
 };

@@ -6,8 +6,6 @@
   import { onMount, afterUpdate } from 'svelte';
 
   import { noteList } from '../store.js';
-  import { documentClient } from '../dynamodb/client.js'
-  import { changeStatus, deleteSnippet } from '../dynamodb/note.js'
 
   import MessageTile from './MessageTile.svelte';
   import Toolbar from './Toolbar.svelte'

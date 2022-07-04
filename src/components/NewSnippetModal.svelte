@@ -1,14 +1,12 @@
 <script>
 
-  import Cookie from 'js-cookie'
+  import { getContext } from 'svelte'
 
   import Icon from './Icon.svelte'
   import Modal from './Modal.svelte'
   import TagSelect from './TagSelect.svelte'
 
   import { show_new_snippet_modal } from '../store.js'
-  import { documentClient } from '../dynamodb/client.js'
-  import { createSnippet } from '../dynamodb/note.js'
   import { toSearchKeys } from '../util/search.js'
   import { getMetadata } from '../util/pipeline.js'
   import { isUrl } from '../util/util.js'
@@ -49,11 +47,9 @@
         search = toSearchKeys(content);
       }
 
-      let accessKey = Cookie.get('awsAccessKey');
-      let secretKey = Cookie.get('awsSecretKey');
-      let client = documentClient(accessKey, secretKey);
+      let client = getContext('client');
 
-      let response = await createSnippet(client, "current", null, title, content, boards, search, image);
+      let response = await client.createSnippet("current", null, title, content, boards, search, image);
 
       window.location.reload();
     } catch (err) {

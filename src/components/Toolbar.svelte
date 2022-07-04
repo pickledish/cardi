@@ -1,10 +1,8 @@
 <script>
 
-  import Cookie from 'js-cookie'
+  import { getContext } from 'svelte';
 
   import { currBoard, currArchived, boardMap, tiles_checked, show_new_snippet_modal } from '../store.js'
-  import { changeStatus, deleteSnippet } from '../dynamodb/note.js'
-  import { documentClient } from '../dynamodb/client.js'
 
   import Icon from './Icon.svelte'
   import ToolbarButton from './ToolbarButton.svelte'
@@ -29,12 +27,10 @@
 
   async function handleBatchArchive() {
     let [from, to] = statusOrder();
-    let accessKey = Cookie.get('awsAccessKey');
-    let secretKey = Cookie.get('awsSecretKey');
-    let client = documentClient(accessKey, secretKey);
+    let client = getContext('client');
     let success = await Promise.all(
       Array.from($tiles_checked).map(async (created) => {
-        return await changeStatus(client, from, created, to);
+        return await client.changeStatus(from, created, to);
       })
     );
     window.location.reload();

@@ -1,6 +1,6 @@
 <script>
+  import { getContext } from 'svelte'
 	import dayjs from 'dayjs'
-  import Cookie from 'js-cookie'
   import Popover from 'svelte-popover'
 
   import Checkbox from './Checkbox.svelte'
@@ -9,8 +9,6 @@
   import Icon from './Icon.svelte'
 
   import { defaultBeforeMs, defaultAfterMs } from '../constants.js'
-  import { documentClient } from '../dynamodb/client.js'
-  import { getBoards } from '../dynamodb/board.js'
   import { currArchived, currAscending, currAfterMs, currBeforeMs, currBoard, boardList, sortedBoardList, showSidebar } from '../store.js'
 
   import { onMount } from 'svelte'
@@ -20,10 +18,8 @@
 
   // When we load the sidebar, async get all boards, then update the tag store
   onMount(async () => {
-    let accessKey = Cookie.get('awsAccessKey');
-    let secretKey = Cookie.get('awsSecretKey');
-    let client = documentClient(accessKey, secretKey);
-    $boardList = await getBoards(client);
+    let client = getContext('client');
+    $boardList = await client.getBoards();
   });
 
   // Support filtering so people don't have to look at them all at once

@@ -1,11 +1,12 @@
 <script>
 
+  import { setContext } from 'svelte';
+
 	import Cookie from 'js-cookie'
 
   import Icon from '../components/Icon.svelte'
 
-  import { lowLevelClient } from '../dynamodb/client.js'
-  import { ensureTables } from '../dynamodb/table.js'
+  import { DynamoClient } from '../client/dynamodb/client.js'
 
 	async function setup() {
 
@@ -15,10 +16,9 @@
     console.log(`Checking credentials and ensuring tables exist...`)
 
     try {
-      let client = lowLevelClient(accessKey, secretKey);
-      let response = await ensureTables(client);
-      Cookie.set("awsAccessKey", accessKey);
-      Cookie.set("awsSecretKey", secretKey);
+      let client = new DynamoClient({"accessKey": accessKey, "secretKey": secretKey});
+      let response = await client.ensureTables();
+      setContext('client', client);
       window.location.hash = "#/overview";
       window.location.reload();
     } catch (err) {

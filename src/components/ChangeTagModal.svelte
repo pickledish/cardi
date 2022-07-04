@@ -1,13 +1,11 @@
 <script>
 
-  import Cookie from 'js-cookie'
+  import { getContext } from 'svelte'
 
   import Modal from './Modal.svelte'
   import TagSelect from './TagSelect.svelte'
 
   import { tiles_checked, noteMap } from '../store.js';
-  import { changeBoards } from '../dynamodb/note.js'
-  import { documentClient } from '../dynamodb/client.js'
 
   export let show_modal = false;
   export let action; // "ADD" or "DELETE"
@@ -18,14 +16,12 @@
 
     let boardIds = selected ? selected.map(elem => elem.value) : [];
 
-    let accessKey = Cookie.get('awsAccessKey');
-    let secretKey = Cookie.get('awsSecretKey');
-    let client = documentClient(accessKey, secretKey);
+    let client = getContext('client');
 
     let success = await Promise.all(
       Array.from($tiles_checked).map(async (created) => {
         let fullSnippet = $noteMap.get(created);
-        return await changeBoards(client, fullSnippet.status, created, boardIds, action);
+        return await client.changeBoards(fullSnippet.status, created, boardIds, action);
       })
     );
 

@@ -1,15 +1,13 @@
 <script>
 
+  import { getContext } from 'svelte'
+
   import dayjs from 'dayjs'
-  import Cookie from 'js-cookie'
   import marked from 'marked'
 
   import { isUrl } from '../util/util.js'
   import { toSearchKeys } from '../util/search.js'
   import { noteMap, boardMap, currBoard } from '../store.js'
-
-  import { documentClient } from '../dynamodb/client.js'
-  import { updateSnippet } from '../dynamodb/note.js'
 
   export let created;
 
@@ -29,13 +27,11 @@
       let searchable = isUrl(editedContent) ? editedTitle : editedTitle  + " " + editedContent;
       let searchKeys = toSearchKeys(searchable);
 
-      let accessKey = Cookie.get('awsAccessKey');
-      let secretKey = Cookie.get('awsSecretKey');
-      let client = documentClient(accessKey, secretKey);
+      let client = getContext('client');
 
       let fixedTitle = editedTitle.length == 0 ? null : editedTitle;
 
-      let response = await updateSnippet(client, fullNote.created, fixedTitle, editedContent, searchKeys);
+      let response = await client.updateSnippet(fullNote.created, fixedTitle, editedContent, searchKeys);
 
       window.location.reload();
     } catch (err) {

@@ -3,7 +3,7 @@ The following is a brief outline of the public API, which every client
 supporting a new backend must adhere to for cardi:
 
 function GenericClient() {
-  this.ensureTable = async function() {};
+  this.ensureTables = async function() {};
   this.getSnippets = async function() {};
   this.createSnippet = async function() {};
   this.updateSnippet = async function() {};
@@ -16,12 +16,10 @@ function GenericClient() {
 If the client doesn't have each of these methods, it won't work.
 */
 
-function getClient(backend) {
+function getClient(backend, opts) {
 
   if (backend == "dynamodb") {
-    return new DynamoDbClient(accessKey, secretKey);
-  } else if (backend == "pouchdb") {
-    return null; // NOT IMPLEMENTED YET STAY TUNED
+    return new DynamoDbClient(opts);
   } else {
     throw `Cannot create client with unsupported backend ${backend}`;
   }
