@@ -9,6 +9,8 @@
   import ChangeTagModal from './ChangeTagModal.svelte'
   import ModalCardLarge from './ModalCardLarge.svelte'
 
+  let client = getContext('client');
+
   let show_tag_modal = false;
   let modal_action = "";
 
@@ -27,7 +29,6 @@
 
   async function handleBatchArchive() {
     let [from, to] = statusOrder();
-    let client = getContext('client');
     let success = await Promise.all(
       Array.from($tiles_checked).map(async (created) => {
         return await client.changeStatus(from, created, to);

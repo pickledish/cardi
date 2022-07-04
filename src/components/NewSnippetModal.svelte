@@ -11,6 +11,8 @@
   import { getMetadata } from '../util/pipeline.js'
   import { isUrl } from '../util/util.js'
 
+  let client = getContext('client');
+
   let title_str = "";
   let content = "";
 
@@ -46,8 +48,6 @@
       } else {
         search = toSearchKeys(content);
       }
-
-      let client = getContext('client');
 
       let response = await client.createSnippet("current", null, title, content, boards, search, image);
 

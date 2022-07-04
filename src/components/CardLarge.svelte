@@ -17,6 +17,8 @@
   $: created_date = fullNote && dayjs(fullNote.created).format('MMM D, YYYY');
   $: updated_date = fullNote && dayjs(fullNote.updated).format('MMM D, YYYY');
 
+  let client = getContext('client');
+
   let editing = false;
 
   async function submit() {
@@ -26,8 +28,6 @@
       // If the content is a URL, don't turn that into search keys
       let searchable = isUrl(editedContent) ? editedTitle : editedTitle  + " " + editedContent;
       let searchKeys = toSearchKeys(searchable);
-
-      let client = getContext('client');
 
       let fixedTitle = editedTitle.length == 0 ? null : editedTitle;
 

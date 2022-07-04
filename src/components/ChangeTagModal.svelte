@@ -10,13 +10,13 @@
   export let show_modal = false;
   export let action; // "ADD" or "DELETE"
 
+  let client = getContext('client');
+
   let selected = null;
 
   async function submit() {
 
     let boardIds = selected ? selected.map(elem => elem.value) : [];
-
-    let client = getContext('client');
 
     let success = await Promise.all(
       Array.from($tiles_checked).map(async (created) => {

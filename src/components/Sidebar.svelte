@@ -16,9 +16,10 @@
   import { toggleStore } from '../util/util.js'
   import { resetView } from '../util/storeutil.js'
 
+  let client = getContext('client');
+
   // When we load the sidebar, async get all boards, then update the tag store
   onMount(async () => {
-    let client = getContext('client');
     $boardList = await client.getBoards();
   });
 
