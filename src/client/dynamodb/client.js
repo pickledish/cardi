@@ -2,7 +2,7 @@ import {ensureTables} from './table.js';
 import {getSnippet, getSnippets, createSnippet, updateSnippet, changeStatus, deleteSnippet, changeBoards} from './note.js';
 import {getBoards} from './board.js';
 
-export class DynamoClient {
+export class DynamoDbClient {
 
   constructor(opts) {
     this.tableClient = new AWS.DynamoDB({

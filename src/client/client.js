@@ -16,7 +16,9 @@ function GenericClient() {
 If the client doesn't have each of these methods, it won't work.
 */
 
-function getClient(backend, opts) {
+import { DynamoDbClient } from './dynamodb/client.js';
+
+export function getClient(backend, opts) {
 
   if (backend == "dynamodb") {
     return new DynamoDbClient(opts);
