@@ -1,7 +1,5 @@
 <script>
 
-  import { getContext } from 'svelte';
-
   import { currBoard, currArchived, boardMap, tiles_checked, show_new_snippet_modal } from '../store.js'
 
   import Icon from './Icon.svelte'
@@ -9,7 +7,7 @@
   import ChangeTagModal from './ChangeTagModal.svelte'
   import ModalCardLarge from './ModalCardLarge.svelte'
 
-  let client = getContext('client');
+  let client = window.client;
 
   let show_tag_modal = false;
   let modal_action = "";

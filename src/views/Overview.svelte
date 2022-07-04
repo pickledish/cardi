@@ -1,7 +1,5 @@
 <script>
 
-  import { setContext } from 'svelte';
-
   import { getClient } from '../client/client.js'
 
   import Cookie from 'js-cookie'
@@ -20,7 +18,7 @@
       "accessKey": Cookie.get('awsAccessKey'),
       "secretKey": Cookie.get('awsSecretKey')
     });
-    setContext('client', client);
+    window.client = client;
     creds = true;
   } else {
     console.log("No creds found, sending to cred input page...");

@@ -1,7 +1,5 @@
 <script>
 
-  import { getContext } from 'svelte'
-
   import Modal from './Modal.svelte'
   import TagSelect from './TagSelect.svelte'
 
@@ -10,7 +8,7 @@
   export let show_modal = false;
   export let action; // "ADD" or "DELETE"
 
-  let client = getContext('client');
+  let client = window.client;
 
   let selected = null;
 

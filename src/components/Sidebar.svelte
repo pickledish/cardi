@@ -1,5 +1,4 @@
 <script>
-  import { getContext } from 'svelte'
 	import dayjs from 'dayjs'
   import Popover from 'svelte-popover'
 
@@ -16,7 +15,7 @@
   import { toggleStore } from '../util/util.js'
   import { resetView } from '../util/storeutil.js'
 
-  let client = getContext('client');
+  let client = window.client;
 
   // When we load the sidebar, async get all boards, then update the tag store
   onMount(async () => {

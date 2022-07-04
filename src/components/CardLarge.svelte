@@ -1,7 +1,5 @@
 <script>
 
-  import { getContext } from 'svelte'
-
   import dayjs from 'dayjs'
   import marked from 'marked'
 
@@ -17,7 +15,7 @@
   $: created_date = fullNote && dayjs(fullNote.created).format('MMM D, YYYY');
   $: updated_date = fullNote && dayjs(fullNote.updated).format('MMM D, YYYY');
 
-  let client = getContext('client');
+  let client = window.client;
 
   let editing = false;
 

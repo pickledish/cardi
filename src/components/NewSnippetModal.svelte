@@ -1,7 +1,5 @@
 <script>
 
-  import { getContext } from 'svelte'
-
   import Icon from './Icon.svelte'
   import Modal from './Modal.svelte'
   import TagSelect from './TagSelect.svelte'
@@ -11,7 +9,7 @@
   import { getMetadata } from '../util/pipeline.js'
   import { isUrl } from '../util/util.js'
 
-  let client = getContext('client');
+  let client = window.client;
 
   let title_str = "";
   let content = "";

@@ -1,7 +1,3 @@
-import { getContext } from 'svelte'
-
-import Cookie from 'js-cookie'
-
 import { writable, derived, get } from 'svelte/store'
 
 import * as constants from './constants.js'
@@ -61,7 +57,7 @@ export const noteList = derived(
   currentParams,
   async (params, set) => {
     console.log(`Update, triggering refresh: ${JSON.stringify(params)}`);
-    let client = getContext('client');
+    let client = window.client;
     let response = await client.getSnippets(params);
     set(response);
   },
