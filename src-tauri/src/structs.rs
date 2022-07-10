@@ -18,6 +18,13 @@ pub struct Get {
 }
 
 #[derive(Serialize, Deserialize)]
+pub struct Delete {
+  pub repository: String,
+  pub table: String,
+  pub key: String,
+}
+
+#[derive(Serialize, Deserialize)]
 pub struct Query {
   pub repository: String,
   pub table: String,
