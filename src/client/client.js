@@ -2,15 +2,17 @@
 The following is a brief outline of the public API, which every client
 supporting a new backend must adhere to for cardi:
 
-function GenericClient() {
-  this.ensureTables = async function() {};
-  this.getSnippets = async function() {};
-  this.createSnippet = async function() {};
-  this.updateSnippet = async function() {};
-  this.changeStatus = async function() {};
-  this.deleteSnippet = async function() {};
-  this.getBoards = async function() {};
-  this.changeBoards = async function() {};
+export class GenericClient {
+  constructor(opts) {}
+  async ensureTables() {};
+  async getSnippet(status, created) {};
+  async getSnippets(struct) {};
+  async createSnippet(status, created, title, content, boards, search, image) {};
+  async updateSnippet(created, title, content, search) {};
+  async changeStatus(oldStatus, created, newStatus) {};
+  async deleteSnippet(created) {};
+  async changeBoards(status, created, boards, action) {};
+  async getBoards() {};
 };
 
 If the client doesn't have each of these methods, it won't work.
