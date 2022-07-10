@@ -1,15 +1,13 @@
 <script>
 
-  import Cookie from 'js-cookie'
-
   import { currBoard, currArchived, boardMap, tiles_checked, show_new_snippet_modal } from '../store.js'
-  import { changeStatus, deleteSnippet } from '../dynamodb/note.js'
-  import { documentClient } from '../dynamodb/client.js'
 
   import Icon from './Icon.svelte'
   import ToolbarButton from './ToolbarButton.svelte'
   import ChangeTagModal from './ChangeTagModal.svelte'
   import ModalCardLarge from './ModalCardLarge.svelte'
+
+  let client = window.client;
 
   let show_tag_modal = false;
   let modal_action = "";
@@ -29,26 +27,20 @@
 
   async function handleBatchArchive() {
     let [from, to] = statusOrder();
-    let accessKey = Cookie.get('awsAccessKey');
-    let secretKey = Cookie.get('awsSecretKey');
-    let client = documentClient(accessKey, secretKey);
     let success = await Promise.all(
       Array.from($tiles_checked).map(async (created) => {
-        return await changeStatus(client, from, created, to);
+        return await client.changeStatus(from, created, to);
       })
     );
     window.location.reload();
   }
 
   async function handleBatchDelete() {
-    let accessKey = Cookie.get('awsAccessKey');
-    let secretKey = Cookie.get('awsSecretKey');
-    let client = documentClient(accessKey, secretKey);
     let ok = window.confirm("Are you sure you want to delete notes?");
     if (ok) {
       let success = await Promise.all(
         Array.from($tiles_checked).map(async (created) => {
-          return await deleteSnippet(client, created);
+          return await client.deleteSnippet(created);
         })
       );
       window.location.reload();

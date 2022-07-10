@@ -1,8 +1,9 @@
 <script>
 
+  import { getClient } from '../client/client.js'
+
   import Cookie from 'js-cookie'
 
-  import { onMount } from 'svelte';
   import LogIn from './LogIn.svelte'
 
   import Navbar from '../components/Navbar.svelte'
@@ -12,14 +13,16 @@
 
   let creds = false;
 
-  // Before we load anything, make sure
-  onMount(() => {
-    if (Cookie.get('awsAccessKey') && Cookie.get('awsSecretKey')) {
-      creds = true;
-    } else {
-      console.log("No creds found, sending to cred input page...");
-    }
-  });
+  if (Cookie.get('awsAccessKey') && Cookie.get('awsSecretKey')) {
+    let client = getClient("dynamodb", {
+      "accessKey": Cookie.get('awsAccessKey'),
+      "secretKey": Cookie.get('awsSecretKey')
+    });
+    window.client = client;
+    creds = true;
+  } else {
+    console.log("No creds found, sending to cred input page...");
+  }
 
 </script>
 

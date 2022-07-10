@@ -4,7 +4,8 @@ import { get } from 'svelte/store';
 
 import { incrementBoardOp, decrementBoardOp, createBoardOp, deleteBoardOp, decIncBoardOp } from './board.js'
 
-import { boardMap, noteMap, inProgressBoards } from '../store.js'
+// awful awful awful
+import { boardMap, noteMap, inProgressBoards } from '../../store.js'
 
 // ----------------------------------------------------------------------------
 // Secret inner workings

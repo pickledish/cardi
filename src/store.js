@@ -1,12 +1,8 @@
-import Cookie from 'js-cookie'
-
 import { writable, derived, get } from 'svelte/store'
 
 import * as constants from './constants.js'
 import { queryStore } from './util/querystore.js'
 import { listToMap } from './util/util.js'
-import { documentClient } from './dynamodb/client.js'
-import { getSnippets } from './dynamodb/note.js'
 import { toSearchKeys } from './util/search.js'
 
 // ----------------------------------------------------------------------------
@@ -61,10 +57,8 @@ export const noteList = derived(
   currentParams,
   async (params, set) => {
     console.log(`Update, triggering refresh: ${JSON.stringify(params)}`);
-    let accessKey = Cookie.get('awsAccessKey');
-    let secretKey = Cookie.get('awsSecretKey');
-    let client = documentClient(accessKey, secretKey);
-    let response = await getSnippets(client, params);
+    let client = window.client;
+    let response = await client.getSnippets(params);
     set(response);
   },
   []
