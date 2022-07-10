@@ -4,8 +4,9 @@
 )]
 
 mod structs;
+mod service;
+mod files;
 
-use serde_json::json;
 use serde_json::Value;
 
 fn main() {
@@ -17,14 +18,5 @@ fn main() {
 
 #[tauri::command]
 fn get(request: structs::Get) -> Result<Value, String> {
-  let value = json!({
-    "success": true,
-    "payload": {
-      "features": [
-        "serde",
-        "json"
-      ]
-    }
-  });
-  Ok(value)
+  return service::get(request);
 }

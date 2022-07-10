@@ -28,7 +28,7 @@ export class TauriGitClient {
   };
 
   async getSnippets(struct) {
-    let resp = await invoke('getSnippet', { status: 'archived', created: 12345 });
+    let resp = await invoke('get', { request: { repository: "local", table: "snippets", key: "12345" }});
     return [resp];
   };
 
