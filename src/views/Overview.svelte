@@ -14,7 +14,7 @@
   let creds = false;
 
   if (Cookie.get('awsAccessKey') && Cookie.get('awsSecretKey')) {
-    let client = getClient("dynamodb", {
+    let client = getClient("git", {
       "accessKey": Cookie.get('awsAccessKey'),
       "secretKey": Cookie.get('awsSecretKey')
     });

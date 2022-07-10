@@ -5,6 +5,13 @@
 
 fn main() {
   tauri::Builder::default()
+    .invoke_handler(tauri::generate_handler![getSnippet])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
+}
+
+#[tauri::command]
+fn getSnippet(status: &str, created: u32) -> String {
+   format!("Hello, {}!", status);
+   return "Hello".to_owned();
 }

@@ -19,11 +19,14 @@ If the client doesn't have each of these methods, it won't work.
 */
 
 import { DynamoDbClient } from './dynamodb/client.js';
+import { TauriGitClient } from './git/client.js';
 
 export function getClient(backend, opts) {
 
   if (backend == "dynamodb") {
     return new DynamoDbClient(opts);
+  } else if (backend == "git") {
+    return new TauriGitClient(opts);
   } else {
     throw `Cannot create client with unsupported backend ${backend}`;
   }

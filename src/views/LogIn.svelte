@@ -14,7 +14,7 @@
     console.log(`Checking credentials and ensuring tables exist...`)
 
     try {
-      let client = getClient("dynamodb", {"accessKey": accessKey, "secretKey": secretKey});
+      let client = getClient("git", {"accessKey": accessKey, "secretKey": secretKey});
       let response = await client.ensureTables();
       Cookie.set("awsAccessKey", accessKey);
       Cookie.set("awsSecretKey", secretKey);
