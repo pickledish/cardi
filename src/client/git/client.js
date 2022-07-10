@@ -24,29 +24,12 @@ export class TauriGitClient {
   };
 
   async getSnippet(status, created) {
-    resp = await invoke('getSnippet', { status: 'archived', created: 12345 });
-    return {
-      "status"  : "current",
-      "created" : 1600000000,
-      "updated" : 1600000001,
-      "title"   : "Sample Note",
-      "content" : "Notes can be plain text, markdown, URLs...",
-      "boards"  : [],
-      "search"  : [],
-    }
+    return getSnippet(this.documentClient, status, created);
   };
 
   async getSnippets(struct) {
     let resp = await invoke('getSnippet', { status: 'archived', created: 12345 });
-    return [{
-      "status"  : "current",
-      "created" : 1600000000,
-      "updated" : 1600000001,
-      "title"   : "Sample Note",
-      "content" : resp,
-      "boards"  : [],
-      "search"  : [],
-    }]
+    return [resp];
   };
 
   async createSnippet(status, created, title, content, boards, search, image) {
